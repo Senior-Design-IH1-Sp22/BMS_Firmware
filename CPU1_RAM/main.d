@@ -1,7 +1,7 @@
 # FIXED
 
 main.obj: ../main.c
-main.obj: D:/Sophia/Documents/Workspace/Senior_Design_BMS/BMS_Firmware/device/driverlib.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/driverlib.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/adc.h
 main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdbool.h
@@ -93,12 +93,12 @@ main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h
-main.obj: D:/Sophia/Documents/Workspace/Senior_Design_BMS/BMS_Firmware/device/device.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h
 main.obj: ../i2cLib_FIFO_master_interrupt.h
 
 ../main.c:
 
-D:/Sophia/Documents/Workspace/Senior_Design_BMS/BMS_Firmware/device/driverlib.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/driverlib.h:
 
 D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -282,7 +282,7 @@ D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h:
 
 D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h:
 
-D:/Sophia/Documents/Workspace/Senior_Design_BMS/BMS_Firmware/device/device.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h:
 
 ../i2cLib_FIFO_master_interrupt.h:
 

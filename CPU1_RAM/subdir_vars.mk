@@ -13,26 +13,32 @@ D:/Programs/TI/C2000Ware_4_00_00_00/libraries/calibration/hrpwm/f28004x/lib/SFO_
 D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \
+../ESP_uart.c \
 ../i2cLib_FIFO_master_interrupt.c \
 ../main.c 
 
 C_DEPS += \
+./ESP_uart.d \
 ./i2cLib_FIFO_master_interrupt.d \
 ./main.d 
 
 OBJS += \
+./ESP_uart.obj \
 ./i2cLib_FIFO_master_interrupt.obj \
 ./main.obj 
 
 OBJS__QUOTED += \
+"ESP_uart.obj" \
 "i2cLib_FIFO_master_interrupt.obj" \
 "main.obj" 
 
 C_DEPS__QUOTED += \
+"ESP_uart.d" \
 "i2cLib_FIFO_master_interrupt.d" \
 "main.d" 
 
 C_SRCS__QUOTED += \
+"../ESP_uart.c" \
 "../i2cLib_FIFO_master_interrupt.c" \
 "../main.c" 
 
