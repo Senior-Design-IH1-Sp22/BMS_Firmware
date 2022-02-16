@@ -73,7 +73,6 @@
 // Included Files
 #include "driverlib.h"
 #include "device.h"
-
 #include <i2c_helper.h>
 
 // Globals
@@ -111,7 +110,8 @@ void I2Cinit(void);
 #define doExample5 0
 #define doExample6 0
 #define doAlarmEnable 0
-#define doReadVoltage 1
+#define doReadVoltage 0
+#define readAllVoltages 1
 #define doDeviceNum 0
 
 void main(void)
@@ -176,6 +176,41 @@ void main(void)
         status = I2C_MasterReceiver(&EEPROM);
         while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
         while(1);
+    }
+    if(readAllVoltages){
+        uint32_t j = 0;
+        ControlAddr = 0x14;
+        uint32_t AddrBase;
+//        for(j = 0; j<15; j++){
+//            AddrBase = ControlAddr+2*j;
+//            //loop through the voltage registers
+//            EEPROM.pControlAddr   = &(AddrBase);
+//            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+//            EEPROM.NumOfDataBytes = 2;
+//            status = I2C_MasterReceiver(&EEPROM);
+//            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+//            verifyEEPROMRead();
+//        }
+        AddrBase = 0x14;
+        //loop through the voltage registers
+        EEPROM.pControlAddr   = &(AddrBase);
+        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+        EEPROM.NumOfDataBytes = 2;
+        status = I2C_MasterReceiver(&EEPROM);
+        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+//
+//        uint32_t p = 0;
+//        for(p = 0; p<50000; p++){
+//
+//        }
+
+        AddrBase = 0x16;
+        //loop through the voltage registers
+        EEPROM.pControlAddr   = &(AddrBase);
+        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+        EEPROM.NumOfDataBytes = 2;
+        status = I2C_MasterReceiver(&EEPROM);
+        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
     }
     if (doDeviceNum) {
         ControlAddr = 0x3E;
