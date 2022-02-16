@@ -1,288 +1,309 @@
 # FIXED
 
 main.obj: ../main.c
-main.obj: C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/device/driverlib.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/adc.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdbool.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_ti_config.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/linkage.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdint.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_stdint40.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/stdint.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/cdefs.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_types.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_types.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_stdint.h
-main.obj: C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_stdint.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_types.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cpu.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/debug.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/asysctl.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sysctl.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_nmi.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sysctl.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/interrupt.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ints.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pie.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/can.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_can.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cla.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cla.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clb.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clb.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clapromcrc.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clapromcrc.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cmpss.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cmpss.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cputimer.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cputimer.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dac.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dac.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcc.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcc.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcsm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcsm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dma.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dma.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ecap.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ecap.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/epwm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/eqep.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_eqep.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/erad.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_erad.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/flash.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_flash.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/fsi.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_fsi.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/gpio.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_gpio.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xint.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/xbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clbxbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwmxbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_inputxbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_outputxbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xbar.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrcap.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrcap.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_lin.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/memcfg.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memcfg.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pga.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pga.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map_legacy.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pmbus.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus_common.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sci.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sci.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sdfm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sdfm.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
-main.obj: C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h
-main.obj: C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/device/device.h
-main.obj: C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/i2c_helper.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/driverlib.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/adc.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdbool.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_ti_config.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/linkage.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdint.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_stdint40.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/stdint.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/cdefs.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_types.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_types.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_stdint.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_stdint.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_types.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cpu.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/debug.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/asysctl.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sysctl.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_nmi.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sysctl.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/interrupt.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ints.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pie.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/can.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_can.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cla.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cla.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clb.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clb.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clapromcrc.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clapromcrc.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cmpss.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cmpss.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cputimer.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cputimer.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dac.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dac.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcc.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcc.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcsm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcsm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dma.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dma.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ecap.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ecap.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/epwm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/eqep.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_eqep.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/erad.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_erad.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/flash.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_flash.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/fsi.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_fsi.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/gpio.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_gpio.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xint.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/xbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clbxbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwmxbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_inputxbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_outputxbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xbar.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrcap.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrcap.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_lin.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/memcfg.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memcfg.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pga.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pga.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map_legacy.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pmbus.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus_common.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sci.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sci.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sdfm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sdfm.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
+main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c_helper.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/uart_helper.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdio.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdarg.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdlib.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdlibf.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/string.h
+main.obj: D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/xlocale/_string.h
 
 ../main.c:
 
-C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/device/driverlib.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/driverlib.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/adc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/adc.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdbool.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdbool.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_ti_config.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_ti_config.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/linkage.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/linkage.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdint.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdint.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_stdint40.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/_stdint40.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/stdint.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/stdint.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/cdefs.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/cdefs.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_types.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_types.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_types.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_types.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_stdint.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/machine/_stdint.h:
 
-C:/ti/ccs1100/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_stdint.h:
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/sys/_stdint.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_types.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_types.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cpu.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cpu.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/debug.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/debug.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/asysctl.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/asysctl.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sysctl.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sysctl.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_nmi.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_nmi.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sysctl.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sysctl.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/interrupt.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/interrupt.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ints.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ints.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pie.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pie.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/can.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/can.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_can.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_can.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cla.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cla.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cla.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cla.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clb.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clb.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clb.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clb.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clapromcrc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/clapromcrc.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clapromcrc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clapromcrc.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cmpss.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cmpss.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cmpss.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cmpss.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cputimer.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/cputimer.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cputimer.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_cputimer.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dac.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dac.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dac.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dac.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcc.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcc.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcc.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcsm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dcsm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcsm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dcsm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dma.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/dma.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dma.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_dma.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ecap.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ecap.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ecap.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_ecap.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/epwm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/epwm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/eqep.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/eqep.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_eqep.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_eqep.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/erad.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/erad.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_erad.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_erad.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/flash.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/flash.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_flash.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_flash.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/fsi.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/fsi.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_fsi.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_fsi.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/gpio.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/gpio.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_gpio.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_gpio.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xint.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xint.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/xbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/xbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clbxbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_clbxbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwmxbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_epwmxbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_inputxbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_inputxbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_outputxbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_outputxbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xbar.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_xbar.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrcap.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrcap.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrcap.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrcap.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_lin.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_lin.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/memcfg.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/memcfg.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memcfg.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_memcfg.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pga.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pga.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pga.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pga.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map_legacy.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pin_map_legacy.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pmbus.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_pmbus.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus_common.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/pmbus_common.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sci.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sci.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sci.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sci.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sdfm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/sdfm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sdfm.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_sdfm.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h:
 
-C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h:
+D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h:
 
-C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/device/device.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h:
 
-C:/Users/xchen/Documents/SeniorDesign/BMS_Firmware/i2c_helper.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c_helper.h:
+
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/uart_helper.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdio.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdarg.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdlib.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/stdlibf.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/string.h:
+
+D:/Programs/TI/ccs/tools/compiler/ti-cgt-c2000_21.6.0.LTS/include/xlocale/_string.h:
 

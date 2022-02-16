@@ -32,40 +32,7 @@
 //!
 //!
 //#############################################################################
-//
-//
-// $Copyright:
-// Copyright (C) 2021 Texas Instruments Incorporated - http://www.ti.com/
-//
-// Redistribution and use in source and binary forms, with or without 
-// modification, are permitted provided that the following conditions 
-// are met:
-// 
-//   Redistributions of source code must retain the above copyright 
-//   notice, this list of conditions and the following disclaimer.
-// 
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the 
-//   documentation and/or other materials provided with the   
-//   distribution.
-// 
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
-//#############################################################################
+
 
 // Defines
 #define _LAUNCHXL_F280049C          true
@@ -74,6 +41,10 @@
 #include "driverlib.h"
 #include "device.h"
 #include <i2c_helper.h>
+#include <uart_helper.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Globals
 struct I2CHandle EEPROM;
@@ -84,7 +55,7 @@ struct I2CHandle *currentResponderPtr;                   // Used in interrupt
 uint16_t passCount = 0;
 uint16_t failCount = 0;
 
-uint16_t AvailableI2C_slaves[20];
+uint16_t AvailableI2C_slaves[10];
 
 uint16_t TX_MsgBuffer[MAX_BUFFER_SIZE];
 uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE];
@@ -110,9 +81,47 @@ void I2Cinit(void);
 #define doExample5 0
 #define doExample6 0
 #define doAlarmEnable 0
-#define doReadVoltage 0
-#define readAllVoltages 1
+#define doReadVoltage 1
+#define readAllVoltages 0
 #define doDeviceNum 0
+
+// Function to swap two numbers
+void swap(char *x, char *y) {
+    char t = *x; *x = *y; *y = t;
+}
+
+// Function to reverse `buffer[i…j]`
+char* reverse(char *buffer, int i, int j)
+{
+    while (i < j)
+        swap(&buffer[i++], &buffer[j--]);
+    return buffer;
+}
+
+// Iterative function to implement `itoa()` function in C
+char* itoa(int value, char* buffer, int base)
+{
+    // invalid input
+    if (base < 2 || base > 32)
+        return buffer;
+    // consider the absolute value of the number
+    int n = abs(value);
+    int i = 0;
+    while (n) {
+        int r = n % base;
+        if (r >= 10)
+            buffer[i++] = 65 + (r - 10);
+        else
+            buffer[i++] = 48 + r;
+        n = n / base;
+    }
+    // if the number is 0
+    if (i == 0)
+        buffer[i++] = '0';
+    buffer[i] = '\0'; // null terminate string
+    // reverse the string and return it
+    return reverse(buffer, 0, i - 1);
+}
 
 void main(void)
 {
@@ -132,6 +141,9 @@ void main(void)
     Interrupt_initVectorTable();
 
     I2Cinit();
+
+    UART_init();
+
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
     Interrupt_register(INT_I2CA_FIFO, &i2cFIFO_isr);
@@ -147,8 +159,6 @@ void main(void)
     //I2Cs connected to I2CA will be found in AvailableI2C_slaves buffer after you run I2CBusScan function.
     uint16_t *pAvailableI2C_slaves = AvailableI2C_slaves;
     status = I2CBusScan(I2CA_BASE, pAvailableI2C_slaves);
-
-    uint16_t i;
 
     currentResponderPtr = &EEPROM;
 
@@ -175,6 +185,15 @@ void main(void)
         EEPROM.NumOfDataBytes = 2;
         status = I2C_MasterReceiver(&EEPROM);
         while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+        UART_transmitString("Voltage at cell 0: ");
+        char voltage_str[10];
+        itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
+        UART_transmitPlain(voltage_str);
+        itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
+        if (strlen(voltage_str) < 2)
+            UART_transmitPlain("0");
+        UART_transmitPlain(voltage_str);
+        UART_transmitString("");
         while(1);
     }
     if(readAllVoltages){
@@ -227,6 +246,12 @@ void main(void)
         EEPROM.NumOfDataBytes = 2;
         status = I2C_MasterReceiver(&EEPROM);
         while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+
+        UART_transmitString("Device number: ");
+        char device_str[10];
+        itoa(RX_MsgBuffer[0], device_str, 10);
+        UART_transmitPlain(device_str);
+        UART_transmitString("");
         while(1);
     }
     //Example 1: EEPROM Byte Write
@@ -271,16 +296,6 @@ void main(void)
         status = I2C_MasterReceiver(&EEPROM);
         verifyEEPROMRead();
     }
-
-    if(status)
-    {
-        fail();
-    }
-    else
-    {
-        pass();
-    }
-
 }
 
 //
