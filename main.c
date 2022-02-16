@@ -74,7 +74,7 @@
 #include "driverlib.h"
 #include "device.h"
 
-#include "i2cLib_FIFO_master_interrupt.h"
+#include <i2c_helper.h>
 
 // Globals
 struct I2CHandle EEPROM;

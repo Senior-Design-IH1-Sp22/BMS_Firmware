@@ -104,7 +104,7 @@ __interrupt void sciaRxISR(void);
 //
 // Main
 //
-void main(void)
+void main_(void)
 {
     //
     // Configure PLL, disable WD, enable peripheral clocks.

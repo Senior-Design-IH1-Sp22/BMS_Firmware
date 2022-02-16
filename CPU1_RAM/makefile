@@ -10,8 +10,10 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./ESP.obj" \
 "./ESP_uart.obj" \
-"./i2cLib_FIFO_master_interrupt.obj" \
+"./UART.obj" \
+"./i2c_helper.obj" \
 "./main.obj" \
 "./device/device.obj" \
 "./device/f28004x_codestartbranch.obj" \
@@ -162,8 +164,8 @@ BMS_Firmware.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "ESP_uart.obj" "i2cLib_FIFO_master_interrupt.obj" "main.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "ESP_uart.d" "i2cLib_FIFO_master_interrupt.d" "main.d" "device\device.d" 
+	-$(RM) "ESP.obj" "ESP_uart.obj" "UART.obj" "i2c_helper.obj" "main.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "ESP.d" "ESP_uart.d" "UART.d" "i2c_helper.d" "main.d" "device\device.d" 
 	-$(RM) "device\f28004x_codestartbranch.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

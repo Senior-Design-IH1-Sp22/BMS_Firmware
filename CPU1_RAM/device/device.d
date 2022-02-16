@@ -74,8 +74,8 @@ device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverl
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h
-device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h
-device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h
+device/device.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c.h
+device/device.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_lin.h
 device/device.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/memcfg.h
@@ -243,9 +243,9 @@ D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_hrpwm.h:
 
 D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/hrpwm.h:
 
-D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/i2c.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c.h:
 
-D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_i2c.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h:
 
 D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/lin.h:
 

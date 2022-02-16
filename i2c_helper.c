@@ -41,9 +41,9 @@
 // $
 //#############################################################################
 
+#include <i2c_helper.h>
 #include "driverlib.h"
 #include "device.h"
-#include "i2cLib_FIFO_master_interrupt.h"
 
 
 

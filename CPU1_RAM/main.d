@@ -94,7 +94,7 @@ main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/spi.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 main.obj: D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h
 main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h
-main.obj: ../i2cLib_FIFO_master_interrupt.h
+main.obj: C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c_helper.h
 
 ../main.c:
 
@@ -284,5 +284,5 @@ D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/device/device.h:
 
-../i2cLib_FIFO_master_interrupt.h:
+C:/Users/sopji/OneDrive\ -\ The\ University\ of\ Texas\ at\ Austin/Senior\ Design/BMS_Firmware/i2c_helper.h:
 
