@@ -81,6 +81,7 @@ void I2Cinit(void);
 #define doExample5 0
 #define doExample6 0
 #define doAlarmEnable 0
+#define doReadVoltageUART 0
 #define doReadVoltage 0
 #define readAllVoltages 1
 #define doDeviceNum 0
@@ -170,25 +171,6 @@ void main(void)
     EEPROM.pControlAddr         = &ControlAddr;
     EEPROM.NumOfAddrBytes       = 1;
 
-    if (doReadVoltage) {
-                    ControlAddr = 0x14;
-                    EEPROM.pControlAddr   = &ControlAddr;
-                    EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                    EEPROM.NumOfDataBytes = 2;
-                    status = I2C_MasterReceiver(&EEPROM);
-                    while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-    //                UART_transmitString("Voltage at cell 0: ");
-    //                char voltage_str[10];
-    //                itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
-    //                UART_transmitPlain(voltage_str);
-    //                itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
-    //                if (strlen(voltage_str) < 2)
-    //                    UART_transmitPlain("0");
-    //                UART_transmitPlain(voltage_str);
-    //                UART_transmitString("");
-    //                while(1);
-                }
-
     while(1){
 //        if (doReadVoltage) {
 //                ControlAddr = 0x14;
@@ -199,26 +181,26 @@ void main(void)
 //                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 //        }
         if (doReadVoltage) {
-                        ControlAddr = 0x14;
-                        EEPROM.pControlAddr   = &ControlAddr;
-                        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                        EEPROM.NumOfDataBytes = 2;
-                        status = I2C_MasterReceiver(&EEPROM);
-                        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+                ControlAddr = 0x14;
+                EEPROM.pControlAddr   = &ControlAddr;
+                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+                EEPROM.NumOfDataBytes = 2;
+                status = I2C_MasterReceiver(&EEPROM);
+                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 
-                        ControlAddr = 0x15;
-                        EEPROM.pControlAddr   = &ControlAddr;
-                        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                        EEPROM.NumOfDataBytes = 2;
-                        status = I2C_MasterReceiver(&EEPROM);
-                        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+                ControlAddr = 0x15;
+                EEPROM.pControlAddr   = &ControlAddr;
+                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+                EEPROM.NumOfDataBytes = 2;
+                status = I2C_MasterReceiver(&EEPROM);
+                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 
-                        ControlAddr = 0x16;
-                        EEPROM.pControlAddr   = &ControlAddr;
-                        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                        EEPROM.NumOfDataBytes = 2;
-                        status = I2C_MasterReceiver(&EEPROM);
-                        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+                ControlAddr = 0x16;
+                EEPROM.pControlAddr   = &ControlAddr;
+                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+                EEPROM.NumOfDataBytes = 2;
+                status = I2C_MasterReceiver(&EEPROM);
+                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
         }
         if (doAlarmEnable) {
                 ControlAddr = 0x66;
@@ -228,25 +210,27 @@ void main(void)
                 EEPROM.pTX_MsgBuffer   = TX_MsgBuffer;
                 status = I2C_MasterTransmitter(&EEPROM);
                 DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
-            }
-//            if (doReadVoltage) {
-//                ControlAddr = 0x14;
-//                EEPROM.pControlAddr   = &ControlAddr;
-//                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-//                EEPROM.NumOfDataBytes = 2;
-//                status = I2C_MasterReceiver(&EEPROM);
-//                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-////                UART_transmitString("Voltage at cell 0: ");
-////                char voltage_str[10];
-////                itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
-////                UART_transmitPlain(voltage_str);
-////                itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
-////                if (strlen(voltage_str) < 2)
-////                    UART_transmitPlain("0");
-////                UART_transmitPlain(voltage_str);
-////                UART_transmitString("");
-////                while(1);
-//            }
+        }
+        //debugging purposes only, for checking I2C with UART output
+        if (doReadVoltageUART) {
+            ControlAddr = 0x14;
+            EEPROM.pControlAddr   = &ControlAddr;
+            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+            EEPROM.NumOfDataBytes = 2;
+            status = I2C_MasterReceiver(&EEPROM);
+            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+
+            UART_transmitString("Voltage at cell 0: ");
+            char voltage_str[10];
+            itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
+            UART_transmitPlain(voltage_str);
+            itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
+            if (strlen(voltage_str) < 2)
+                UART_transmitPlain("0");
+            UART_transmitPlain(voltage_str);
+            UART_transmitString("");
+            while(1);
+        }
         if(readAllVoltages){
             uint32_t j = 0;
             ControlAddr = 0x14;
