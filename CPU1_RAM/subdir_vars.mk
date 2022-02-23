@@ -9,8 +9,8 @@ CMD_SRCS += \
 ../28004x_generic_ram_lnk.cmd 
 
 LIB_SRCS += \
-D:/Programs/TI/C2000Ware_4_00_00_00/libraries/calibration/hrpwm/f28004x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib \
-D:/Programs/TI/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
+C:/ti/c2000/C2000Ware_4_00_00_00/libraries/calibration/hrpwm/f28004x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib \
+C:/ti/c2000/C2000Ware_4_00_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \
 ../ESP.c \
