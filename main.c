@@ -131,6 +131,43 @@ void main(void)
     // Disable pin locks and enable internal pullups.
     Device_initGPIO();
 
+    // Initialize PIE and clear PIE registers. Disable CPU interrupts.
+    Interrupt_initModule();
+
+    // Initialize the PIE vector table with pointers to the shell Interrupt Service Routines (ISR).
+    Interrupt_initVectorTable();
+
+    UART_init();
+
+    // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
+    EINT;
+    ERTM;
+
+    while(1) {
+//        UART_transmitString("hello");
+        UART_transmitString("\r\nSending AT+GMR");
+        UART_sendCommand("AT+GMR");
+        DEVICE_DELAY_US(50000);
+//        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
+//        SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
+//        while (SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
+//            receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
+//            SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
+//        }
+        UART_printRxBuffer();
+        UART_resetRxBuffer();
+        DEVICE_DELAY_US(500000);
+    }
+}
+
+void main_(void)
+{
+    // Initialize device clock and peripherals
+    Device_init();
+
+    // Disable pin locks and enable internal pullups.
+    Device_initGPIO();
+
     // Initialize I2C pins
     I2C_GPIO_init();
 
