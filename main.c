@@ -124,6 +124,7 @@ char* itoa(int value, char* buffer, int base)
     return reverse(buffer, 0, i - 1);
 }
 
+/*
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -160,8 +161,9 @@ void main(void)
         DEVICE_DELAY_US(500000);
     }
 }
+*/
 
-void main_(void)
+void main(void)
 {
     // Initialize device clock and peripherals
     Device_init();
@@ -273,7 +275,7 @@ void main_(void)
             ControlAddr = 0x14;
             uint32_t AddrBase;
             //use timer interrupt instead of loop
-            for(j = 0; j<15; j++){
+            for(j = 0; j<31; j++){
                 AddrBase = ControlAddr+1*j;
                 //loop through the voltage registers
                 EEPROM.pControlAddr   = &(AddrBase);
