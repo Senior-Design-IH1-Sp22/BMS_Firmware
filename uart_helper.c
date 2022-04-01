@@ -119,23 +119,61 @@ volatile char ESP_RX_FIFO[ESP_RX_FIFO_LENGTH][ESP_RX_FIFO_WIDTH];
 volatile int ESP_RX_FIFO_PutI = 0, ESP_RX_FIFO_GetI = 0;
 
 void ESP_EnableRXInts(void) {
-    while(SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
-        SCI_readCharNonBlocking(SCIB_BASE);
+    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
     }
     SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
     SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
 }
 
 void ESP_DisableRXInts(void) {
-    while(SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
-        SCI_readCharNonBlocking(SCIB_BASE);
+    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
     }
     SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
     SCI_disableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
 }
 
-void UART_resetRxBuffer(void)
-{
+void ESP_SendCommand(char* command) {
+    UART_TransmitESP(command);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+}
+
+void ESP_WifiSendChar(char c) {
+    char cmd[] = "AT+CIPSEND=0,1\r\n";
+    char str[2] = "\0";
+    str[0] = c;
+    UART_TransmitESP(cmd);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+    UART_TransmitESP(str);
+}
+
+void ESP_WifiSendString(char* str, int len) {
+    char cmd[] = "AT+CIPSEND=0,__\r\n";
+    cmd[13] = len/10 + '0';
+    cmd[14] = len%10 + '0';
+    UART_TransmitESP(cmd);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+    UART_TransmitESP(str);
+}
+
+
+void UART_ResetRxBuffer(void) {
     UART_RxIndex = 0;
     int i = 0;
     for (; i < 100; i++) {
@@ -143,80 +181,55 @@ void UART_resetRxBuffer(void)
     }
 }
 
-void UART_printRxBuffer(void)
-{
+void UART_PrintRxBuffer(void) {
     int i = 0;
     for (; (i < 100) && (UART_RxBuffer[i] != '\0'); i++) {
         SCI_writeCharBlockingFIFO(SCIA_BASE, UART_RxBuffer[i]);
     }
 }
 
-void UART_transmitString(char* string)
-{
-    strcpy(UART_TxBuffer, string);
-    strcat(UART_TxBuffer, "\r\n");
-    SCI_writeCharArray(SCIA_BASE, (uint16_t*)UART_TxBuffer, strlen(UART_TxBuffer)+1);
+void UART_TransmitCOM(char* string) {
+    SCI_writeCharArray(SCIA_BASE, (uint16_t*)string, strlen(string));
 }
 
-
-
-void ESP_SendCommand(char* command) {
-    ESP_OutString(command);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
-        SCI_readCharNonBlocking(SCIB_BASE);
-    }
-    DEVICE_DELAY_US(2000000);
+void UART_TransmitESP(char* string) {
+    SCI_writeCharArray(SCIB_BASE, (uint16_t*)string, strlen(string));
 }
 
-void ESP_OutString(char* str) {
-    int i=0;
-    while(str[i]) {
-        SCI_writeCharBlockingNonFIFO(SCIB_BASE, str[i++]);
-    }
-}
-
-void ESP_OutCharArr(char* str, int len) {
-    int i = 0;
-    for (; i<len; i++) {
-        SCI_writeCharBlockingNonFIFO(SCIB_BASE, str[i++]);
-    }
-}
-
-void UART_sendCommand(char* string)
-{
-    strcpy(UART_TxBuffer, string);
-    strcat(UART_TxBuffer, "\r\n");
-    SCI_writeCharArray(SCIB_BASE, (uint16_t*)UART_TxBuffer, strlen(UART_TxBuffer));
-}
-
-void UART_transmitPlain(char* string)
-{
-    strcpy(UART_TxBuffer, string);
-    SCI_writeCharArray(SCIA_BASE, (uint16_t*)UART_TxBuffer, strlen(UART_TxBuffer)+1);
-}
-
-void ESP_Init(void)
-{
+void ESP_Init(void) {
     ESP_DisableRXInts();
-
-    // Configure ESP
-//    ESP_SendCommand("AT\r\n");        // Config as Access Point
-//    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
+    ESP_SendCommand(AT_Test);
+    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
     ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
     ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
+//    DEVICE_DELAY_US(20000);
+    ESP_SendCommand(AT_AP_QUERY);
+    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission AT_TRANSFER_NORMAL
     ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
+    ESP_SendCommand(AT_DHCP_QUERY);
     ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
     ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
+    ESP_SendCommand(AT_MULTI_QUERY);
     ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
-    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission
+    ESP_SendCommand(AT_SERVER_QUERY);
     ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
+
+//    // Configure ESP
+//    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
+//    ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
+//    ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
+//    ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
+//    ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
+//    ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
+//    ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
+//    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission
+//    ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
+
 
     ESP_EnableRXInts();
 }
 
-void UART_init(void)
-{
+void UART_Init(void) {
     // GPIO28 is the SCIA Rx pin.
     GPIO_setMasterCore(28, GPIO_CORE_CPU1);
     GPIO_setPinConfig(DEVICE_GPIO_CFG_SCIRXDA);
@@ -255,6 +268,8 @@ void UART_init(void)
     // Configure SCIA for COM
     SCI_setConfig(SCIA_BASE, 25000000, 9600, (SCI_CONFIG_WLEN_8 | SCI_CONFIG_STOP_ONE | SCI_CONFIG_PAR_NONE));
     SCI_resetChannels(SCIA_BASE);
+    SCI_resetRxFIFO(SCIA_BASE);
+    SCI_resetTxFIFO(SCIA_BASE);
     SCI_clearInterruptStatus(SCIA_BASE, SCI_INT_TXRDY | SCI_INT_RXRDY_BRKDT);
     SCI_enableFIFO(SCIA_BASE);
     SCI_enableModule(SCIA_BASE);
@@ -270,42 +285,38 @@ void UART_init(void)
     SCI_enableModule(SCIB_BASE);
     SCI_performSoftwareReset(SCIB_BASE);
 
-    // Enable the RXRDY interrupt
-    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-
     // Send starting message.
-    UART_transmitString("\n\nUART Initialized!\n");
+    UART_TransmitCOM("\n\nUART Initialized!\n");
+    ESP_Init();
+
+    // Enable the RXRDY interrupt
+//    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
 
     // Clear the SCI interrupts before enabling them.
     SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
 
     // Enable the interrupts in the PIE: Group 9 interrupts 1 & 2.
-    Interrupt_enable(INT_SCIB_RX);
+//    Interrupt_enable(INT_SCIB_RX);
 //    Interrupt_enable(INT_SCIB_TX);
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
-
-    ESP_Init();
 
 }
 
 // ======================================================================================
 //              ESP
 
-
-
 //
 // sciaTxISR - Disable the TXRDY interrupt and print message asking
 //             for a character.
 //
 __interrupt void
-scibTxISR(void)
-{
+scibTxISR(void) {
     // Disable the TXRDY interrupt.
     SCI_disableInterrupt(SCIA_BASE, SCI_INT_TXRDY);
 
 //    msg = "\r\nSending AT+GMR";
-    UART_transmitString("\r\nSending AT+GMR");
-    UART_sendCommand("AT+GMR");
+    UART_TransmitCOM("\r\nSending AT+GMR\n");
+    UART_TransmitESP("AT+GMR\r\n");
 //    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 22);
 
     // Ackowledge the PIE interrupt.
@@ -320,8 +331,7 @@ scibTxISR(void)
  * First element of buffer is length
  */
 __interrupt void
-scibRxISR(void)
-{
+scibRxISR(void) {
     int i = -1;
     char cmd[16];
 
@@ -355,7 +365,7 @@ scibRxISR(void)
     // Check if Space in FIFO, read and toss packet if not.
     if ((ESP_RX_FIFO_PutI+1)%ESP_RX_FIFO_LENGTH == ESP_RX_FIFO_GetI) {
         while(len--) {
-            SCI_readCharNonBlocking(SCIB_BASE);
+            SCI_readCharBlockingFIFO(SCIB_BASE);
         }
         return;
     }
