@@ -555,4 +555,5 @@
 		<project id="i2c_ex6_eeprom_interrupt.com.ti.ccstudio.buildDefinitions.C2000.ProjectType.1923633018" name="C2000" projectType="com.ti.ccstudio.buildDefinitions.C2000.ProjectType"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

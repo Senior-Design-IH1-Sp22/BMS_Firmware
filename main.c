@@ -62,6 +62,9 @@ uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE];
 uint32_t ControlAddr;
 uint16_t status=0;
 
+//I2C-UART 16b data buffer
+uint16_t Data16b_Buf[MAX_BUFFER_SIZE];
+
 // Function Prototypes
 interrupt void i2cFIFO_isr(void);
 interrupt void i2c_isr(void);
@@ -182,7 +185,7 @@ void main(void)
 
     I2Cinit();
 
-    UART_init();
+    //UART_init();
 
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
@@ -251,38 +254,41 @@ void main(void)
                 DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
         }
         //debugging purposes only, for checking I2C with UART output
-        if (doReadVoltageUART) {
-            ControlAddr = 0x14;
-            EEPROM.pControlAddr   = &ControlAddr;
-            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-            EEPROM.NumOfDataBytes = 2;
-            status = I2C_MasterReceiver(&EEPROM);
-            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-
-            UART_transmitString("Voltage at cell 0: ");
-            char voltage_str[10];
-            itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
-            UART_transmitPlain(voltage_str);
-            itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
-            if (strlen(voltage_str) < 2)
-                UART_transmitPlain("0");
-            UART_transmitPlain(voltage_str);
-            UART_transmitString("");
-            while(1);
-        }
+//        if (doReadVoltageUART) {
+//            ControlAddr = 0x14;
+//            EEPROM.pControlAddr   = &ControlAddr;
+//            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+//            EEPROM.NumOfDataBytes = 2;
+//            status = I2C_MasterReceiver(&EEPROM);
+//            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+//
+//            UART_transmitString("Voltage at cell 0: ");
+//            char voltage_str[10];
+//            itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
+//            UART_transmitPlain(voltage_str);
+//            itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
+//            if (strlen(voltage_str) < 2)
+//                UART_transmitPlain("0");
+//            UART_transmitPlain(voltage_str);
+//            UART_transmitString("");
+//            while(1);
+//        }
         if(readAllVoltages){
             uint32_t j = 0;
             ControlAddr = 0x14;
-            uint32_t AddrBase;
+            //uint32_t AddrBase;
+            uint32_t Addr[32];
             //use timer interrupt instead of loop
-            for(j = 0; j<31; j++){
-                AddrBase = ControlAddr+1*j;
+            while(ControlAddr < 0x32){
+                Addr[(ControlAddr-0x14)] = ControlAddr;
                 //loop through the voltage registers
-                EEPROM.pControlAddr   = &(AddrBase);
+                EEPROM.pControlAddr   = &ControlAddr;
                 EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+                Data16b_Buf[(ControlAddr-0x14)] = EEPROM.pRX_MsgBuffer;
                 EEPROM.NumOfDataBytes = 2;
                 status = I2C_MasterReceiver(&EEPROM);
                 while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+                ControlAddr = ControlAddr+1;
             }
             while(1);
         }
