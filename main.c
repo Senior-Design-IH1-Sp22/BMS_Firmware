@@ -94,7 +94,7 @@ void swap(char *x, char *y) {
     char t = *x; *x = *y; *y = t;
 }
 
-// Function to reverse `buffer[i…j]`
+// Function to reverse `buffer[iï¿½j]`
 char* reverse(char *buffer, int i, int j)
 {
     while (i < j)
@@ -142,25 +142,25 @@ void main(void)
     // Initialize the PIE vector table with pointers to the shell Interrupt Service Routines (ISR).
     Interrupt_initVectorTable();
 
-    UART_init();
+    UART_Init();
 
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     EINT;
     ERTM;
-
+    int cnt = 0;
     while(1) {
-//        UART_transmitString("hello");
-        UART_transmitString("\r\nSending AT+GMR");
-        UART_sendCommand("AT+GMR");
-        DEVICE_DELAY_US(50000);
+//        UART_TransmitCOM("hello\n");
+        UART_TransmitCOM("\r\nSending a string\n");
+        ESP_WifiSendString("aabcdefg", 8);
+        DEVICE_DELAY_US(500000);
 //        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
 //        SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
 //        while (SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
 //            receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
 //            SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
 //        }
-        UART_printRxBuffer();
-        UART_resetRxBuffer();
+//        UART_PrintRxBuffer();
+//        UART_ResetRxBuffer();
         DEVICE_DELAY_US(500000);
     }
 }
@@ -185,7 +185,7 @@ void main(void)
 
     I2Cinit();
 
-    //UART_init();
+    UART_Init();
 
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
