@@ -219,11 +219,12 @@ void main(void)
                 //loop through the voltage registers
                 EEPROM.pControlAddr   = &ControlAddr;
                 EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                //read I2C FIFO buffer
-                Data16b_Buf[(ControlAddr-0x14)] = EEPROM.pRX_MsgBuffer;
                 EEPROM.NumOfDataBytes = 2;
                 status = I2C_MasterReceiver(&EEPROM);
                 while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+                //read I2C FIFO buffer
+                Data16b_Buf[(ControlAddr-0x14)] = RX_MsgBuffer[j];
+                j=j^1;
                 ControlAddr = ControlAddr+1;
             }
             while(1);
