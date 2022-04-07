@@ -89,43 +89,6 @@ void I2Cinit(void);
 #define readAllVoltages 1
 #define doDeviceNum 0
 
-// Function to swap two numbers
-void swap(char *x, char *y) {
-    char t = *x; *x = *y; *y = t;
-}
-
-// Function to reverse `buffer[i�j]`
-char* reverse(char *buffer, int i, int j)
-{
-    while (i < j)
-        swap(&buffer[i++], &buffer[j--]);
-    return buffer;
-}
-
-// Iterative function to implement `itoa()` function in C
-char* itoa(int value, char* buffer, int base)
-{
-    // invalid input
-    if (base < 2 || base > 32)
-        return buffer;
-    // consider the absolute value of the number
-    int n = abs(value);
-    int i = 0;
-    while (n) {
-        int r = n % base;
-        if (r >= 10)
-            buffer[i++] = 65 + (r - 10);
-        else
-            buffer[i++] = 48 + r;
-        n = n / base;
-    }
-    // if the number is 0
-    if (i == 0)
-        buffer[i++] = '0';
-    buffer[i] = '\0'; // null terminate string
-    // reverse the string and return it
-    return reverse(buffer, 0, i - 1);
-}
 
 /*
 void main(void)
@@ -185,7 +148,7 @@ void main(void)
 
     I2Cinit();
 
-    UART_Init();
+    //UART_Init();
 
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
@@ -214,14 +177,6 @@ void main(void)
     EEPROM.NumOfAddrBytes       = 1;
 
     while(1){
-//        if (doReadVoltage) {
-//                ControlAddr = 0x14;
-//                EEPROM.pControlAddr   = &ControlAddr;
-//                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-//                EEPROM.NumOfDataBytes = 2;
-//                status = I2C_MasterReceiver(&EEPROM);
-//                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-//        }
         if (doReadVoltage) {
                 ControlAddr = 0x14;
                 EEPROM.pControlAddr   = &ControlAddr;
@@ -253,26 +208,6 @@ void main(void)
                 status = I2C_MasterTransmitter(&EEPROM);
                 DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
         }
-        //debugging purposes only, for checking I2C with UART output
-//        if (doReadVoltageUART) {
-//            ControlAddr = 0x14;
-//            EEPROM.pControlAddr   = &ControlAddr;
-//            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-//            EEPROM.NumOfDataBytes = 2;
-//            status = I2C_MasterReceiver(&EEPROM);
-//            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-//
-//            UART_transmitString("Voltage at cell 0: ");
-//            char voltage_str[10];
-//            itoa(RX_MsgBuffer[1] >> 1, voltage_str, 10);
-//            UART_transmitPlain(voltage_str);
-//            itoa(RX_MsgBuffer[0] >> 1, voltage_str, 10);
-//            if (strlen(voltage_str) < 2)
-//                UART_transmitPlain("0");
-//            UART_transmitPlain(voltage_str);
-//            UART_transmitString("");
-//            while(1);
-//        }
         if(readAllVoltages){
             uint32_t j = 0;
             ControlAddr = 0x14;
@@ -284,6 +219,7 @@ void main(void)
                 //loop through the voltage registers
                 EEPROM.pControlAddr   = &ControlAddr;
                 EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+                //read I2C FIFO buffer
                 Data16b_Buf[(ControlAddr-0x14)] = EEPROM.pRX_MsgBuffer;
                 EEPROM.NumOfDataBytes = 2;
                 status = I2C_MasterReceiver(&EEPROM);
@@ -318,88 +254,6 @@ void main(void)
     }
 }
 
-//REFERENCES
-//    //Example 1: EEPROM Byte Write
-//    if (doExample1) {
-//        //Write 11 to EEPROM address 0x0
-//        ControlAddr = 0x0;     //EEPROM address to write
-//        EEPROM.NumOfDataBytes       = 1;
-//        TX_MsgBuffer[0]             = 11;
-//        EEPROM.pTX_MsgBuffer        = TX_MsgBuffer;
-//        status = I2C_MasterTransmitter(&EEPROM);
-//        DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
-//    }
-//    //Example 2: EEPROM Byte Read
-//    if (doExample2) {
-//        //Make sure 11 is written to EEPROM address 0x0
-//        ControlAddr = 0;
-//        EEPROM.pControlAddr   = &ControlAddr;
-//        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-//        EEPROM.NumOfDataBytes = 1;
-//        status = I2C_MasterReceiver(&EEPROM);
-//        while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-//        verifyEEPROMRead();
-//    }
-//    //Example 3: EEPROM word (16-bit) write
-//    if (doExample3) {
-//        //EEPROM address 0x1 = 22 &  0x2 = 33
-//        ControlAddr = 1;   //EEPROM address to write
-//        EEPROM.NumOfDataBytes  = 2;
-//        TX_MsgBuffer[0]        = 0x11;
-//        TX_MsgBuffer[1]        = 0x22;
-//        EEPROM.pTX_MsgBuffer   = TX_MsgBuffer;
-//        status = I2C_MasterTransmitter(&EEPROM);
-//        DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
-//    }
-//    //Example 4: EEPROM word (16-bit) read
-//    if (doExample4) {
-//        //Make sure EEPROM address 1 has 0x11 and 2 has 0x22
-//        ControlAddr = 1;
-//        EEPROM.pControlAddr   = &ControlAddr;
-//        EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-//        EEPROM.NumOfDataBytes = 2;
-//        status = I2C_MasterReceiver(&EEPROM);
-//        verifyEEPROMRead();
-//    }
-
-//
-// pass - Function to be called if data written matches data read
-//
-void
-pass(void)
-{
-    asm("   ESTOP0");
-    for(;;);
-}
-
-//
-// fail - Function to be called if data written does NOT match data read
-//
-void fail(void)
-{
-    asm("   ESTOP0");
-    for(;;);
-}
-//may need to use interrupt for ALL registers
-//use interrupt for each type of data, put received data into struct
-//receive data, compare TX to RX, if not equal it stops.
-void verifyEEPROMRead(void)
-{
-    uint16_t i;
-    while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-
-    for(i=0;i<EEPROM.NumOfDataBytes;i++)
-    {
-        if(RX_MsgBuffer[i] != TX_MsgBuffer[i])
-        {
-            //Transmitted data doesn't match received data
-            //Fail condition. PC shouldn't reach here
-            ESTOP0;
-            fail();
-        }
-    }
-}
-
 interrupt void i2c_isr(void)
 {
     uint16_t MasterSlave = HWREGH(currentResponderPtr->base + I2C_O_MDR);
@@ -421,42 +275,5 @@ interrupt void i2cFIFO_isr(void)
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP8);
 }
 
-
-void I2C_GPIO_init(void)
-{
-    // I2CA pins (SDAA / SCLA)
-    GPIO_setDirectionMode(DEVICE_GPIO_PIN_SDAA, GPIO_DIR_MODE_IN);
-    GPIO_setPadConfig(DEVICE_GPIO_PIN_SDAA, GPIO_PIN_TYPE_PULLUP);
-    GPIO_setMasterCore(DEVICE_GPIO_PIN_SDAA, GPIO_CORE_CPU1);
-    GPIO_setQualificationMode(DEVICE_GPIO_PIN_SDAA, GPIO_QUAL_ASYNC);
-
-    GPIO_setDirectionMode(DEVICE_GPIO_PIN_SCLA, GPIO_DIR_MODE_IN);
-    GPIO_setPadConfig(DEVICE_GPIO_PIN_SCLA, GPIO_PIN_TYPE_PULLUP);
-    GPIO_setMasterCore(DEVICE_GPIO_PIN_SCLA, GPIO_CORE_CPU1);
-    GPIO_setQualificationMode(DEVICE_GPIO_PIN_SCLA, GPIO_QUAL_ASYNC);
-
-    GPIO_setPinConfig(DEVICE_GPIO_CFG_SDAA);
-    GPIO_setPinConfig(DEVICE_GPIO_CFG_SCLA);
-}
-
-void I2Cinit(void)
-{
-    //myI2CA initialization
-    I2C_disableModule(I2CA_BASE);
-    I2C_initMaster(I2CA_BASE, DEVICE_SYSCLK_FREQ, 30000, I2C_DUTYCYCLE_50);
-    I2C_setConfig(I2CA_BASE, I2C_MASTER_SEND_MODE);
-    I2C_setSlaveAddress(I2CA_BASE, 0x10);
-    I2C_setOwnSlaveAddress(I2CA_BASE, 0x60); //I2CA address
-    I2C_disableLoopback(I2CA_BASE);
-    I2C_setBitCount(I2CA_BASE, I2C_BITCOUNT_8);
-    I2C_setDataCount(I2CA_BASE, 2);
-    I2C_setAddressMode(I2CA_BASE, I2C_ADDR_MODE_7BITS);
-    I2C_enableFIFO(I2CA_BASE);
-    I2C_clearInterruptStatus(I2CA_BASE, I2C_INT_ARB_LOST | I2C_INT_NO_ACK);
-    I2C_setFIFOInterruptLevel(I2CA_BASE, I2C_FIFO_TXEMPTY, I2C_FIFO_RX2);
-    I2C_enableInterrupt(I2CA_BASE, I2C_INT_ADDR_SLAVE | I2C_INT_ARB_LOST | I2C_INT_NO_ACK | I2C_INT_STOP_CONDITION);
-    I2C_setEmulationMode(I2CA_BASE, I2C_EMULATION_FREE_RUN);
-    I2C_enableModule(I2CA_BASE);
-}
 // End of File
 

@@ -86,6 +86,12 @@ struct I2CHandle
 uint16_t I2C_TransmitSlaveAddress_ControlBytes(struct I2CHandle *I2C_Params);
 uint16_t I2CBusScan(uint32_t base, uint16_t *pAvailableI2C_slaves);
 
+//void pass(void);
+//void fail(void);
+//void verifyEEPROMRead(void);
+void I2C_GPIO_init(void);
+void I2Cinit(void);
+
 uint16_t I2C_MasterTransmitter(struct I2CHandle *I2C_Params);
 uint16_t I2C_MasterReceiver(struct I2CHandle *I2C_Params);
 uint16_t I2C_SlaveTransmitter(struct I2CHandle *I2C_Params);

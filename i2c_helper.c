@@ -50,6 +50,84 @@
 void handleI2C_ErrorCondition(struct I2CHandle *I2C_Params);
 void Write_Read_TX_RX_FIFO(struct I2CHandle *I2C_Params);
 
+////
+//// pass - Function to be called if data written matches data read
+////
+//void
+//pass(void)
+//{
+//    asm("   ESTOP0");
+//    for(;;);
+//}
+//
+////
+//// fail - Function to be called if data written does NOT match data read
+////
+//void fail(void)
+//{
+//    asm("   ESTOP0");
+//    for(;;);
+//}
+
+////may need to use interrupt for ALL registers
+////use interrupt for each type of data, put received data into struct
+////receive data, compare TX to RX, if not equal it stops.
+//void verifyEEPROMRead(void)
+//{
+//    uint16_t i;
+//    while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+//
+//    for(i=0;i<EEPROM.NumOfDataBytes;i++)
+//    {
+//        if(RX_MsgBuffer[i] != TX_MsgBuffer[i])
+//        {
+//            //Transmitted data doesn't match received data
+//            //Fail condition. PC shouldn't reach here
+//            ESTOP0;
+//            fail();
+//        }
+//    }
+//}
+
+
+
+void I2C_GPIO_init(void)
+{
+    // I2CA pins (SDAA / SCLA)
+    GPIO_setDirectionMode(DEVICE_GPIO_PIN_SDAA, GPIO_DIR_MODE_IN);
+    GPIO_setPadConfig(DEVICE_GPIO_PIN_SDAA, GPIO_PIN_TYPE_PULLUP);
+    GPIO_setMasterCore(DEVICE_GPIO_PIN_SDAA, GPIO_CORE_CPU1);
+    GPIO_setQualificationMode(DEVICE_GPIO_PIN_SDAA, GPIO_QUAL_ASYNC);
+
+    GPIO_setDirectionMode(DEVICE_GPIO_PIN_SCLA, GPIO_DIR_MODE_IN);
+    GPIO_setPadConfig(DEVICE_GPIO_PIN_SCLA, GPIO_PIN_TYPE_PULLUP);
+    GPIO_setMasterCore(DEVICE_GPIO_PIN_SCLA, GPIO_CORE_CPU1);
+    GPIO_setQualificationMode(DEVICE_GPIO_PIN_SCLA, GPIO_QUAL_ASYNC);
+
+    GPIO_setPinConfig(DEVICE_GPIO_CFG_SDAA);
+    GPIO_setPinConfig(DEVICE_GPIO_CFG_SCLA);
+}
+
+void I2Cinit(void)
+{
+    //myI2CA initialization
+    I2C_disableModule(I2CA_BASE);
+    I2C_initMaster(I2CA_BASE, DEVICE_SYSCLK_FREQ, 30000, I2C_DUTYCYCLE_50);
+    I2C_setConfig(I2CA_BASE, I2C_MASTER_SEND_MODE);
+    I2C_setSlaveAddress(I2CA_BASE, 0x10);
+    I2C_setOwnSlaveAddress(I2CA_BASE, 0x60); //I2CA address
+    I2C_disableLoopback(I2CA_BASE);
+    I2C_setBitCount(I2CA_BASE, I2C_BITCOUNT_8);
+    I2C_setDataCount(I2CA_BASE, 2);
+    I2C_setAddressMode(I2CA_BASE, I2C_ADDR_MODE_7BITS);
+    I2C_enableFIFO(I2CA_BASE);
+    I2C_clearInterruptStatus(I2CA_BASE, I2C_INT_ARB_LOST | I2C_INT_NO_ACK);
+    I2C_setFIFOInterruptLevel(I2CA_BASE, I2C_FIFO_TXEMPTY, I2C_FIFO_RX2);
+    I2C_enableInterrupt(I2CA_BASE, I2C_INT_ADDR_SLAVE | I2C_INT_ARB_LOST | I2C_INT_NO_ACK | I2C_INT_STOP_CONDITION);
+    I2C_setEmulationMode(I2CA_BASE, I2C_EMULATION_FREE_RUN);
+    I2C_enableModule(I2CA_BASE);
+}
+
 uint16_t I2CBusScan(uint32_t base, uint16_t *pAvailableI2C_slaves)
 {
     uint16_t probeSlaveAddress, i;
