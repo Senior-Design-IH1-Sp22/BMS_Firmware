@@ -227,7 +227,7 @@ void main(void)
                 j=j^1;
                 ControlAddr = ControlAddr+1;
             }
-            while(1);
+            //while(1);
         }
         if (doDeviceNum) {
             ControlAddr = 0x3E;

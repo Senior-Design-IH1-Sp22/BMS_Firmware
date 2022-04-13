@@ -219,10 +219,10 @@
 //
 // I2C
 //
-#define DEVICE_GPIO_PIN_SDAA        35U  // GPIO number for I2C SDAA
-#define DEVICE_GPIO_PIN_SCLA        37U  // GPIO number for I2C SCLA
-#define DEVICE_GPIO_CFG_SDAA        GPIO_35_I2CA_SDA  // "pinConfig" for I2C SDAA
-#define DEVICE_GPIO_CFG_SCLA        GPIO_37_I2CA_SCL  // "pinConfig" for I2C SCLA
+#define DEVICE_GPIO_PIN_SDAA        32U  // GPIO number for I2C SDAA
+#define DEVICE_GPIO_PIN_SCLA        33U  // GPIO number for I2C SCLA
+#define DEVICE_GPIO_CFG_SDAA        GPIO_32_I2CA_SDA  // "pinConfig" for I2C SDAA
+#define DEVICE_GPIO_CFG_SCLA        GPIO_33_I2CA_SCL  // "pinConfig" for I2C SCLA
 
 //
 // eQEP
