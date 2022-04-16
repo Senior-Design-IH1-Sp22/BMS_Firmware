@@ -1,82 +1,100 @@
+/*
+ * ESP.c
+ */
+
 //
-//#include <stdint.h>
-//#include <stdbool.h>
-//#include "ESP.h"
-//#include "uart_helper.h"
+// Included Files
 //
-//#define readBufferSize 100
-//
-//char transmitBuffer[15];
-//uint8_t buildBuffer[15];
-//volatile char readBuffer[readBufferSize];
-//uint8_t readBufferIndex;
-//uint8_t buildBufferIndex;
-//volatile uint8_t readBufferLength;
-//volatile int bytesReading = -1;
-//
-//void Wifi_initialize() {
-//    bytesReading = -1;
-//    readBufferIndex = 0;
-//    readBufferLength = 0;
-//}
-//
-//void Wifi_readIntoBuffer() {
-//    volatile int length = 0;
-//    volatile char* read = ESP_GetString(&length);
-//
-//    for(int i = 0; i < length; i++) {
-//        readBuffer[(readBufferIndex + i) % readBufferSize] = read[i];
-//    }
-//    readBufferLength += length;
-//}
-//
-//int lastReading = 0;
-//void Wifi_handler() {
-//    Wifi_readIntoBuffer();
-//
-//    if(bytesReading == 0) {
-//        if(buildBuffer[0] == 1) {
-//            primaryR = buildBuffer[1];
-//            primaryG = buildBuffer[2];
-//            primaryB = buildBuffer[3];
-//            secondaryR = buildBuffer[4];
-//            secondaryG = buildBuffer[5];
-//            secondaryB = buildBuffer[6];
-//        } else if(buildBuffer[0] == 2) {
-//            fontIndex = buildBuffer[1];
-//        } else if(buildBuffer[0] == 3) {
-//            bladeEffectIndex = buildBuffer[1];
-//        } else if(buildBuffer[0] == 4) {
-//            Wifi_sendSettings(primaryR, primaryG, primaryB, secondaryR, secondaryG, secondaryB, fontIndex, bladeEffectIndex);
-//        }
-//        bytesReading = -1;
-//    } else if(bytesReading > 0) {
-//        //  in middle of reading packet
-//        while(bytesReading > 0 && readBufferLength > 0) {
-//            buildBuffer[buildBufferIndex++] = readBuffer[readBufferIndex];
-//            readBufferIndex = (readBufferIndex + 1) % readBufferSize;
-//            bytesReading--; readBufferLength--;
-//
-//            lastReading = millis();
-//        }
-//
-//        if(millis() - lastReading > 500) bytesReading = -1;
-//    } else {
-//        //  awaiting header
-//        if(readBufferLength > 0) {
-//            //  read header
-//            buildBuffer[0] = readBuffer[readBufferIndex];
-//            buildBufferIndex = 1;
-//            readBufferIndex = (readBufferIndex + 1) % readBufferSize;
-//
-//            if(buildBuffer[0] == 1) bytesReading = 6;
-//            else if(buildBuffer[0] == 2) bytesReading = 1;
-//            else if(buildBuffer[0] == 3) bytesReading = 1;
-//            else if(buildBuffer[0] == 4) bytesReading = 0;
-//            else readBufferLength = 0;  //  throw away
-//
-//            lastReading = millis();
-//        }
-//    }
-//
-//}
+#include "driverlib.h"
+#include "device.h"
+#include <string.h>
+#include <stdint.h>
+#include "uart_helper.h"
+#include "ESP.h"
+
+void ESP_Init(void) {
+    ESP_DisableRXInts();
+    ESP_SendCommand(AT_Test);
+    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
+    ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
+    ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
+//    DEVICE_DELAY_US(20000);
+    ESP_SendCommand(AT_AP_QUERY);
+    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission AT_TRANSFER_NORMAL
+    ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
+    ESP_SendCommand(AT_DHCP_QUERY);
+    ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
+    ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
+    ESP_SendCommand(AT_MULTI_QUERY);
+    ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
+    ESP_SendCommand(AT_SERVER_QUERY);
+    ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
+
+//    // Configure ESP
+//    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
+//    ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
+//    ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
+//    ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
+//    ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
+//    ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
+//    ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
+//    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission
+//    ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
+
+
+    ESP_EnableRXInts();
+}
+
+void ESP_EnableRXInts(void) {
+    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+    }
+    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+}
+
+void ESP_DisableRXInts(void) {
+    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+    }
+    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_disableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+}
+
+void ESP_SendCommand(char* command) {
+    UART_TransmitESP(command);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+}
+
+void ESP_WifiSendChar(char c) {
+    char cmd[] = "AT+CIPSEND=0,1\r\n";
+    char str[2] = "\0";
+    str[0] = c;
+    UART_TransmitESP(cmd);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+    UART_TransmitESP(str);
+}
+
+void ESP_WifiSendString(char* str, int len) {
+    char cmd[] = "AT+CIPSEND=0,__\r\n";
+    cmd[13] = len/10 + '0';
+    cmd[14] = len%10 + '0';
+    UART_TransmitESP(cmd);
+    DEVICE_DELAY_US(10000);
+    SCI_readCharBlockingFIFO(SCIB_BASE);
+    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
+        SCI_readCharBlockingFIFO(SCIB_BASE);
+        DEVICE_DELAY_US(100);
+    }
+    UART_TransmitESP(str);
+}

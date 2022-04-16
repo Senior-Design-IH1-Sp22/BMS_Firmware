@@ -1,74 +1,6 @@
-//#############################################################################
-//
-// FILE:   sci_ex2_interrupts.c
-//
-// TITLE:  SCI interrupt echoback example.
-//
-//! \addtogroup driver_example_list
-//! <h1>SCI Interrupt Echoback</h1>
-//!
-//!  This test receives and echo-backs data through the SCI-A port
-//!  via interrupts.
-//!
-//!  A terminal such as 'putty' can be used to view the data from
-//!  the SCI and to send information to the SCI. Characters received
-//!  by the SCI port are sent back to the host.
-//!
-//!  Running the Application
-//!  Open a COM port with the following settings using a terminal:
-//!  -  Find correct COM port
-//!  -  Bits per second = 9600
-//!  -  Data Bits = 8
-//!  -  Parity = None
-//!  -  Stop Bits = 1
-//!  -  Hardware Control = None
-//!
-//!  The program will print out a greeting and then ask you to
-//!  enter a character which it will echo back to the terminal.
-//!
-//!  Watch Variables
-//!  - counter - the number of characters sent
-//!
-//! External Connections
-//!  Connect the SCI-A port to a PC via a transceiver and cable.
-//!  - GPIO28 is SCI_A-RXD (Connect to Pin3, PC-TX, of serial DB9 cable)
-//!  - GPIO29 is SCI_A-TXD (Connect to Pin2, PC-RX, of serial DB9 cable)
-//
-//#############################################################################
-//
-//
-// $Copyright:
-// Copyright (C) 2021 Texas Instruments Incorporated - http://www.ti.com/
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
-//
-//   Redistributions of source code must retain the above copyright
-//   notice, this list of conditions and the following disclaimer.
-//
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the
-//   distribution.
-//
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
-//#############################################################################
+/*
+ * uart_helper.c
+ */
 
 //
 // Included Files
@@ -89,11 +21,9 @@ extern uint16_t RamfuncsRunStart;
 //
 // Defines
 //
-// Define AUTOBAUD to use the autobaud lock feature
-//#define AUTOBAUD
+#define ESP_RX_BUFFER_LENGTH 1000
 #define ESP_RX_FIFO_LENGTH  12
 #define ESP_RX_FIFO_WIDTH   48
-#define ESP_RX_BUFFER_LENGTH 1000
 
 //
 // Globals
@@ -118,60 +48,6 @@ volatile char CONNECTION_ID;
 volatile char ESP_RX_FIFO[ESP_RX_FIFO_LENGTH][ESP_RX_FIFO_WIDTH];
 volatile int ESP_RX_FIFO_PutI = 0, ESP_RX_FIFO_GetI = 0;
 
-void ESP_EnableRXInts(void) {
-    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
-    }
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-}
-
-void ESP_DisableRXInts(void) {
-    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
-    }
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-    SCI_disableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-}
-
-void ESP_SendCommand(char* command) {
-    UART_TransmitESP(command);
-    DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
-        DEVICE_DELAY_US(100);
-    }
-}
-
-void ESP_WifiSendChar(char c) {
-    char cmd[] = "AT+CIPSEND=0,1\r\n";
-    char str[2] = "\0";
-    str[0] = c;
-    UART_TransmitESP(cmd);
-    DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
-        DEVICE_DELAY_US(100);
-    }
-    UART_TransmitESP(str);
-}
-
-void ESP_WifiSendString(char* str, int len) {
-    char cmd[] = "AT+CIPSEND=0,__\r\n";
-    cmd[13] = len/10 + '0';
-    cmd[14] = len%10 + '0';
-    UART_TransmitESP(cmd);
-    DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
-        DEVICE_DELAY_US(100);
-    }
-    UART_TransmitESP(str);
-}
-
 
 void UART_ResetRxBuffer(void) {
     UART_RxIndex = 0;
@@ -194,39 +70,6 @@ void UART_TransmitCOM(char* string) {
 
 void UART_TransmitESP(char* string) {
     SCI_writeCharArray(SCIB_BASE, (uint16_t*)string, strlen(string));
-}
-
-void ESP_Init(void) {
-    ESP_DisableRXInts();
-    ESP_SendCommand(AT_Test);
-    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
-    ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
-    ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
-//    DEVICE_DELAY_US(20000);
-    ESP_SendCommand(AT_AP_QUERY);
-    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission AT_TRANSFER_NORMAL
-    ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
-    ESP_SendCommand(AT_DHCP_QUERY);
-    ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
-    ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
-    ESP_SendCommand(AT_MULTI_QUERY);
-    ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
-    ESP_SendCommand(AT_SERVER_QUERY);
-    ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
-
-//    // Configure ESP
-//    ESP_SendCommand(AT_Disable_Echo);       // Disable UART Echo
-//    ESP_SendCommand(AT_SET_WIFI_AP);        // Config as Access Point
-//    ESP_SendCommand(AT_AP_CONFIG);          // Set SSID and Password
-//    ESP_SendCommand(AT_DHCP_EN);            // Enable DHCP Server
-//    ESP_SendCommand(AT_SAP_IP_SET);         // Set Server IP to 192.168.4.1
-//    ESP_SendCommand(AT_MULTI_EN);           // Enable Multiple Connections
-//    ESP_SendCommand(AT_SERVER_CONFIG);      // Enable Server on Port 333
-//    ESP_SendCommand(AT_TRANSFER_NORMAL);    // Enable Transparent Transmission
-//    ESP_SendCommand(AT_LONG_TIMEOUT);       // 2 hour timeout so it doesn't DC.
-
-
-    ESP_EnableRXInts();
 }
 
 void UART_Init(void) {

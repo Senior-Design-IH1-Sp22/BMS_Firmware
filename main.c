@@ -42,6 +42,7 @@
 #include "device.h"
 #include <i2c_helper.h>
 #include <uart_helper.h>
+#include <ESP.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -90,7 +91,7 @@ void I2Cinit(void);
 #define doDeviceNum 0
 
 
-/*
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -110,7 +111,6 @@ void main(void)
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     EINT;
     ERTM;
-    int cnt = 0;
     while(1) {
 //        UART_TransmitCOM("hello\n");
         UART_TransmitCOM("\r\nSending a string\n");
@@ -127,8 +127,8 @@ void main(void)
         DEVICE_DELAY_US(500000);
     }
 }
-*/
 
+/*
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -254,7 +254,7 @@ void main(void)
         }
     }
 }
-
+*/
 interrupt void i2c_isr(void)
 {
     uint16_t MasterSlave = HWREGH(currentResponderPtr->base + I2C_O_MDR);
