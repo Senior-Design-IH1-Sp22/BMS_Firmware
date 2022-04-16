@@ -64,7 +64,7 @@ uint32_t ControlAddr;
 uint16_t status=0;
 
 //I2C-UART 16b data buffer
-uint16_t Data16b_Buf[MAX_BUFFER_SIZE];
+uint16_t I2C_VoltageBuffer[MAX_BUFFER_SIZE];
 
 // Function Prototypes
 interrupt void i2cFIFO_isr(void);
@@ -136,9 +136,6 @@ void main(void)
 
     // Disable pin locks and enable internal pullups.
     Device_initGPIO();
-
-    // Initialize I2C pins
-    I2C_GPIO_init();
 
     // Initialize PIE and clear PIE registers. Disable CPU interrupts.
     Interrupt_initModule();
@@ -223,7 +220,7 @@ void main(void)
                 status = I2C_MasterReceiver(&EEPROM);
                 while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
                 //read I2C FIFO buffer
-                Data16b_Buf[(ControlAddr-0x14)] = RX_MsgBuffer[j];
+                I2C_VoltageBuffer[(ControlAddr-0x14)] = RX_MsgBuffer[j];
                 j=j^1;
                 ControlAddr = ControlAddr+1;
             }

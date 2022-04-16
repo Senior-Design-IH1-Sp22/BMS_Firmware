@@ -1,99 +1,19 @@
-//#############################################################################
-//
-// FILE:   i2cLib_FIFO_master_interrupt.c
-//
-// TITLE:  C28x-I2C Library source file for FIFO interrupts
-//
-//#############################################################################
-//#############################################################################
-//
-//
-// $Copyright:
-// Copyright (C) 2021 Texas Instruments Incorporated - http://www.ti.com/
-//
-// Redistribution and use in source and binary forms, with or without 
-// modification, are permitted provided that the following conditions 
-// are met:
-// 
-//   Redistributions of source code must retain the above copyright 
-//   notice, this list of conditions and the following disclaimer.
-// 
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the 
-//   documentation and/or other materials provided with the   
-//   distribution.
-// 
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
-//#############################################################################
+/*
+ * i2c_helper.c
+ *
+ * Reference: i2cLib_FIFO_master_interrupt.c from C28x-I2C library
+ */
 
-#include <i2c_helper.h>
 #include "driverlib.h"
 #include "device.h"
-
-
+#include <i2c_helper.h>
 
 void handleI2C_ErrorCondition(struct I2CHandle *I2C_Params);
 void Write_Read_TX_RX_FIFO(struct I2CHandle *I2C_Params);
 
-////
-//// pass - Function to be called if data written matches data read
-////
-//void
-//pass(void)
-//{
-//    asm("   ESTOP0");
-//    for(;;);
-//}
-//
-////
-//// fail - Function to be called if data written does NOT match data read
-////
-//void fail(void)
-//{
-//    asm("   ESTOP0");
-//    for(;;);
-//}
-
-////may need to use interrupt for ALL registers
-////use interrupt for each type of data, put received data into struct
-////receive data, compare TX to RX, if not equal it stops.
-//void verifyEEPROMRead(void)
-//{
-//    uint16_t i;
-//    while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-//
-//    for(i=0;i<EEPROM.NumOfDataBytes;i++)
-//    {
-//        if(RX_MsgBuffer[i] != TX_MsgBuffer[i])
-//        {
-//            //Transmitted data doesn't match received data
-//            //Fail condition. PC shouldn't reach here
-//            ESTOP0;
-//            fail();
-//        }
-//    }
-//}
-
-
-
 void I2C_GPIO_init(void)
 {
-    // I2CA pins (SDAA / SCLA)
+    // I2CA pins (SDAA 32 / 35) (SCLA 33 / 37)
     GPIO_setDirectionMode(DEVICE_GPIO_PIN_SDAA, GPIO_DIR_MODE_IN);
     GPIO_setPadConfig(DEVICE_GPIO_PIN_SDAA, GPIO_PIN_TYPE_PULLUP);
     GPIO_setMasterCore(DEVICE_GPIO_PIN_SDAA, GPIO_CORE_CPU1);
@@ -110,7 +30,7 @@ void I2C_GPIO_init(void)
 
 void I2Cinit(void)
 {
-    //myI2CA initialization
+    I2C_GPIO_init();
     I2C_disableModule(I2CA_BASE);
     I2C_initMaster(I2CA_BASE, DEVICE_SYSCLK_FREQ, 30000, I2C_DUTYCYCLE_50);
     I2C_setConfig(I2CA_BASE, I2C_MASTER_SEND_MODE);
@@ -127,6 +47,11 @@ void I2Cinit(void)
     I2C_setEmulationMode(I2CA_BASE, I2C_EMULATION_FREE_RUN);
     I2C_enableModule(I2CA_BASE);
 }
+
+
+// ###############################################################################
+//                          Library I2C Functions
+// ###############################################################################
 
 uint16_t I2CBusScan(uint32_t base, uint16_t *pAvailableI2C_slaves)
 {
