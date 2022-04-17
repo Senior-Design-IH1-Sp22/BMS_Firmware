@@ -150,7 +150,7 @@ void main(void)
 
     ESP_Init();
 
-    //UART_Init();
+    UART_Init();
 
     // Enable interrupts
     // Enable the RXRDY interrupt

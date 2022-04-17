@@ -25,7 +25,7 @@
 #define AT_LIST_CLIENTS "AT+CWLIF\r\n"
 #define AT_LONG_TIMEOUT "AT+CIPSTO=0\r\n"
 
-
+void ESP_Init(void);
 void ESP_EnableRXInts(void);
 void ESP_DisableRXInts(void);
 void ESP_SendCommand(char* str);
