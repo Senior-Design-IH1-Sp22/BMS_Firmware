@@ -12,6 +12,7 @@
 #include "uart_helper.h"
 #include "ESP.h"
 
+
 void ESP_Init(void) {
     ESP_DisableRXInts();
     ESP_SendCommand(AT_Test);
@@ -46,27 +47,27 @@ void ESP_Init(void) {
 }
 
 void ESP_EnableRXInts(void) {
-    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
+    while(SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
     }
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_clearInterruptStatus(UART_ESP_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_enableInterrupt(UART_ESP_BASE, SCI_INT_RXRDY_BRKDT);
 }
 
 void ESP_DisableRXInts(void) {
-    while(SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
+    while(SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
     }
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-    SCI_disableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_clearInterruptStatus(UART_ESP_BASE, SCI_INT_RXRDY_BRKDT);
+    SCI_disableInterrupt(UART_ESP_BASE, SCI_INT_RXRDY_BRKDT);
 }
 
 void ESP_SendCommand(char* command) {
     UART_TransmitESP(command);
     DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
+    SCI_readCharBlockingFIFO(UART_ESP_BASE);
+    while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
         DEVICE_DELAY_US(100);
     }
 }
@@ -77,9 +78,9 @@ void ESP_WifiSendChar(char c) {
     str[0] = c;
     UART_TransmitESP(cmd);
     DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
+    SCI_readCharBlockingFIFO(UART_ESP_BASE);
+    while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
         DEVICE_DELAY_US(100);
     }
     UART_TransmitESP(str);
@@ -91,9 +92,9 @@ void ESP_WifiSendString(char* str, int len) {
     cmd[14] = len%10 + '0';
     UART_TransmitESP(cmd);
     DEVICE_DELAY_US(10000);
-    SCI_readCharBlockingFIFO(SCIB_BASE);
-    while (SCI_getRxFIFOStatus(SCIB_BASE)) {
-        SCI_readCharBlockingFIFO(SCIB_BASE);
+    SCI_readCharBlockingFIFO(UART_ESP_BASE);
+    while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
         DEVICE_DELAY_US(100);
     }
     UART_TransmitESP(str);

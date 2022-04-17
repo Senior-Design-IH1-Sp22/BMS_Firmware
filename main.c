@@ -90,8 +90,9 @@ void I2Cinit(void);
 #define readAllVoltages 1
 #define doDeviceNum 0
 
+#define TESTING_ESP
 
-
+#ifdef TESTING_ESP
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -127,8 +128,7 @@ void main(void)
         DEVICE_DELAY_US(500000);
     }
 }
-
-/*
+#else
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -145,7 +145,21 @@ void main(void)
 
     I2Cinit();
 
+    ESP_Init();
+
     //UART_Init();
+
+    // Enable interrupts
+    // Enable the RXRDY interrupt
+//    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
+
+    // Clear the SCI interrupts before enabling them.
+//    SCI_clearInterruptStatus(UART_ESP_BASE, SCI_INT_RXRDY_BRKDT);
+
+    // Enable the interrupts in the PIE: Group 9 interrupts 1 & 2.
+//    Interrupt_enable(INT_SCIB_RX);
+//    Interrupt_enable(INT_SCIB_TX);
+//    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
 
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
@@ -175,35 +189,35 @@ void main(void)
 
     while(1){
         if (doReadVoltage) {
-                ControlAddr = 0x14;
-                EEPROM.pControlAddr   = &ControlAddr;
-                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                EEPROM.NumOfDataBytes = 2;
-                status = I2C_MasterReceiver(&EEPROM);
-                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+            ControlAddr = 0x14;
+            EEPROM.pControlAddr   = &ControlAddr;
+            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+            EEPROM.NumOfDataBytes = 2;
+            status = I2C_MasterReceiver(&EEPROM);
+            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 
-                ControlAddr = 0x15;
-                EEPROM.pControlAddr   = &ControlAddr;
-                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                EEPROM.NumOfDataBytes = 2;
-                status = I2C_MasterReceiver(&EEPROM);
-                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+            ControlAddr = 0x15;
+            EEPROM.pControlAddr   = &ControlAddr;
+            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+            EEPROM.NumOfDataBytes = 2;
+            status = I2C_MasterReceiver(&EEPROM);
+            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 
-                ControlAddr = 0x16;
-                EEPROM.pControlAddr   = &ControlAddr;
-                EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-                EEPROM.NumOfDataBytes = 2;
-                status = I2C_MasterReceiver(&EEPROM);
-                while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
+            ControlAddr = 0x16;
+            EEPROM.pControlAddr   = &ControlAddr;
+            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
+            EEPROM.NumOfDataBytes = 2;
+            status = I2C_MasterReceiver(&EEPROM);
+            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
         }
         if (doAlarmEnable) {
-                ControlAddr = 0x66;
-                EEPROM.NumOfDataBytes  = 2;
-                TX_MsgBuffer[0]        = 0x82;
-                TX_MsgBuffer[1]        = 0xF0;
-                EEPROM.pTX_MsgBuffer   = TX_MsgBuffer;
-                status = I2C_MasterTransmitter(&EEPROM);
-                DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
+            ControlAddr = 0x66;
+            EEPROM.NumOfDataBytes  = 2;
+            TX_MsgBuffer[0]        = 0x82;
+            TX_MsgBuffer[1]        = 0xF0;
+            EEPROM.pTX_MsgBuffer   = TX_MsgBuffer;
+            status = I2C_MasterTransmitter(&EEPROM);
+            DEVICE_DELAY_US(EEPROM.WriteCycleTime_in_us);
         }
         if(readAllVoltages){
             uint32_t j = 0;
@@ -251,7 +265,8 @@ void main(void)
         }
     }
 }
-*/
+#endif
+
 interrupt void i2c_isr(void)
 {
     uint16_t MasterSlave = HWREGH(currentResponderPtr->base + I2C_O_MDR);

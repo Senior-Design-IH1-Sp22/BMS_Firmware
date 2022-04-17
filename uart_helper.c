@@ -69,23 +69,23 @@ void UART_TransmitCOM(char* string) {
 }
 
 void UART_TransmitESP(char* string) {
-    SCI_writeCharArray(SCIB_BASE, (uint16_t*)string, strlen(string));
+    SCI_writeCharArray(UART_ESP_BASE, (uint16_t*)string, strlen(string));
 }
 
 void UART_Init(void) {
-    // GPIO28 is the SCIA Rx pin.
-    GPIO_setMasterCore(28, GPIO_CORE_CPU1);
+    // GPIO9 is the SCIA Rx pin.
+    GPIO_setMasterCore(9, GPIO_CORE_CPU1);
     GPIO_setPinConfig(DEVICE_GPIO_CFG_SCIRXDA);
-    GPIO_setDirectionMode(28, GPIO_DIR_MODE_IN);
-    GPIO_setPadConfig(28, GPIO_PIN_TYPE_STD);
-    GPIO_setQualificationMode(28, GPIO_QUAL_ASYNC);
+    GPIO_setDirectionMode(9, GPIO_DIR_MODE_IN);
+    GPIO_setPadConfig(9, GPIO_PIN_TYPE_STD);
+    GPIO_setQualificationMode(9, GPIO_QUAL_ASYNC);
 
-    // GPIO29 is the SCIA Tx pin.
-    GPIO_setMasterCore(29, GPIO_CORE_CPU1);
+    // GPIO8 is the SCIA Tx pin.
+    GPIO_setMasterCore(8, GPIO_CORE_CPU1);
     GPIO_setPinConfig(DEVICE_GPIO_CFG_SCITXDA);
-    GPIO_setDirectionMode(29, GPIO_DIR_MODE_OUT);
-    GPIO_setPadConfig(29, GPIO_PIN_TYPE_STD);
-    GPIO_setQualificationMode(29, GPIO_QUAL_ASYNC);
+    GPIO_setDirectionMode(8, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(8, GPIO_PIN_TYPE_STD);
+    GPIO_setQualificationMode(8, GPIO_QUAL_ASYNC);
 
     // GPIO13 is the SCIB Rx pin.
     GPIO_setMasterCore(13, GPIO_CORE_CPU1);
@@ -108,6 +108,7 @@ void UART_Init(void) {
     SCI_performSoftwareReset(SCIA_BASE);
     SCI_performSoftwareReset(SCIB_BASE);
 
+#if UART_ESP_BASE == SCIB_BASE
     // Configure SCIA for COM
     SCI_setConfig(SCIA_BASE, 25000000, 9600, (SCI_CONFIG_WLEN_8 | SCI_CONFIG_STOP_ONE | SCI_CONFIG_PAR_NONE));
     SCI_resetChannels(SCIA_BASE);
@@ -117,32 +118,17 @@ void UART_Init(void) {
     SCI_enableFIFO(SCIA_BASE);
     SCI_enableModule(SCIA_BASE);
     SCI_performSoftwareReset(SCIA_BASE);
+#endif
 
     // Configure SCIB for ESP
-    SCI_setConfig(SCIB_BASE, 25000000, 115200, (SCI_CONFIG_WLEN_8 | SCI_CONFIG_STOP_ONE | SCI_CONFIG_PAR_NONE));
-    SCI_resetChannels(SCIB_BASE);
-    SCI_resetRxFIFO(SCIB_BASE);
-    SCI_resetTxFIFO(SCIB_BASE);
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_TXRDY | SCI_INT_RXRDY_BRKDT);
-    SCI_enableFIFO(SCIB_BASE);
-    SCI_enableModule(SCIB_BASE);
-    SCI_performSoftwareReset(SCIB_BASE);
-
-    // Send starting message.
-    UART_TransmitCOM("\n\nUART Initialized!\n");
-    ESP_Init();
-
-    // Enable the RXRDY interrupt
-//    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-
-    // Clear the SCI interrupts before enabling them.
-    SCI_clearInterruptStatus(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
-
-    // Enable the interrupts in the PIE: Group 9 interrupts 1 & 2.
-//    Interrupt_enable(INT_SCIB_RX);
-//    Interrupt_enable(INT_SCIB_TX);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP9);
-
+    SCI_setConfig(UART_ESP_BASE, 25000000, 115200, (SCI_CONFIG_WLEN_8 | SCI_CONFIG_STOP_ONE | SCI_CONFIG_PAR_NONE));
+    SCI_resetChannels(UART_ESP_BASE);
+    SCI_resetRxFIFO(UART_ESP_BASE);
+    SCI_resetTxFIFO(UART_ESP_BASE);
+    SCI_clearInterruptStatus(UART_ESP_BASE, SCI_INT_TXRDY | SCI_INT_RXRDY_BRKDT);
+    SCI_enableFIFO(UART_ESP_BASE);
+    SCI_enableModule(UART_ESP_BASE);
+    SCI_performSoftwareReset(UART_ESP_BASE);
 }
 
 // ======================================================================================
