@@ -64,7 +64,9 @@ uint32_t ControlAddr;
 uint16_t status=0;
 
 //I2C-UART 16b data buffer
-uint16_t I2C_VoltageBuffer[MAX_BUFFER_SIZE];
+unsigned char I2C_VoltageBuffer[MAX_BUFFER_SIZE];
+//I2C-UART register address buffer
+unsigned char Addr[32];
 
 // Function Prototypes
 interrupt void i2cFIFO_isr(void);
@@ -90,7 +92,7 @@ void I2Cinit(void);
 #define readAllVoltages 1
 #define doDeviceNum 0
 
-#define TESTING_ESP
+//#define TESTING_ESP
 
 #ifdef TESTING_ESP
 void main(void)
@@ -114,7 +116,7 @@ void main(void)
     ERTM;
     while(1) {
 //        UART_TransmitCOM("hello\n");
-        UART_TransmitCOM("\r\nSending a string\n");
+        //UART_TransmitCOM("\r\nSending a string\n");
         ESP_WifiSendString("aabcdefg", 8);
         DEVICE_DELAY_US(500000);
 //        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
@@ -125,10 +127,11 @@ void main(void)
 //        }
 //        UART_PrintRxBuffer();
 //        UART_ResetRxBuffer();
-        DEVICE_DELAY_US(500000);
+        //DEVICE_DELAY_US(500000);
     }
 }
 #else
+
 void main(void)
 {
     // Initialize device clock and peripherals
@@ -223,9 +226,8 @@ void main(void)
             uint32_t j = 0;
             ControlAddr = 0x14;
             //uint32_t AddrBase;
-            uint32_t Addr[32];
             //use timer interrupt instead of loop
-            while(ControlAddr < 0x32){
+            while(ControlAddr < 0x34){
                 Addr[(ControlAddr-0x14)] = ControlAddr;
                 //loop through the voltage registers
                 EEPROM.pControlAddr   = &ControlAddr;
@@ -238,7 +240,6 @@ void main(void)
                 j=j^1;
                 ControlAddr = ControlAddr+1;
             }
-            //while(1);
         }
         if (doDeviceNum) {
             ControlAddr = 0x3E;
@@ -263,6 +264,22 @@ void main(void)
             UART_transmitString("");
             while(1);
         }
+        //UART_TransmitCOM("\r\nSending a string\n");
+        //Concatenate voltage register bytes
+        uint16_t voltage = ((I2C_VoltageBuffer[1]<<8) & 0xFF00)|I2C_VoltageBuffer[0];
+
+        char vhex[4] = {0xF, 1, I2C_VoltageBuffer[1], I2C_VoltageBuffer[0]};
+        ESP_WifiSendString(vhex, 4);
+        DEVICE_DELAY_US(500000);
+//        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
+//        SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
+//        while (SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
+//            receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
+//            SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
+//        }
+//        UART_PrintRxBuffer();
+//        UART_ResetRxBuffer();
+        //DEVICE_DELAY_US(500000);
     }
 }
 #endif
