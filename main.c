@@ -28,13 +28,13 @@ uint16_t failCount = 0;
 
 uint16_t AvailableI2C_slaves[10];
 
-uint16_t TX_MsgBuffer[MAX_BUFFER_SIZE];
-uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE];
+uint16_t TX_MsgBuffer[MAX_BUFFER_SIZE/2];
+uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE/2];
 uint32_t ControlAddr;
 uint16_t status=0;
 
 //I2C-UART 16b data buffer
-unsigned char I2C_VoltageBuffer[MAX_BUFFER_SIZE];
+unsigned char I2C_VoltageBuffer[32];
 //I2C-UART register address buffer
 unsigned char Addr[32];
 
@@ -50,12 +50,12 @@ void verifyEEPROMRead(void);
 void I2C_GPIO_init(void);
 void I2Cinit(void);
 
-#define doExample1 0
-#define doExample2 0
-#define doExample3 0
-#define doExample4 0
-#define doExample5 0
-#define doExample6 0
+//#define doExample1 0
+//#define doExample2 0
+//#define doExample3 0
+//#define doExample4 0
+//#define doExample5 0
+//#define doExample6 0
 #define doAlarmEnable 0
 #define doReadVoltageUART 0
 #define doReadVoltage 0
@@ -231,12 +231,11 @@ void main(void)
             status = I2C_MasterReceiver(&EEPROM);
             while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
 
-            UART_transmitString("Device number: ");
-            char device_str[10];
-            itoa(RX_MsgBuffer[0], device_str, 10);
-            UART_transmitPlain(device_str);
-            UART_transmitString("");
-            while(1);
+//            UART_transmitString("Device number: ");
+//            char device_str[10];
+//            itoa(RX_MsgBuffer[0], device_str, 10);
+//            UART_transmitPlain(device_str);
+//            UART_transmitString("");
         }
         //UART_TransmitCOM("\r\nSending a string\n");
         //Concatenate voltage register bytes
