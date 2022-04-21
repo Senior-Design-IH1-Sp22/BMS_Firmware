@@ -68,8 +68,8 @@ void UART_TransmitCOM(char* string) {
     SCI_writeCharArray(SCIA_BASE, (uint16_t*)string, strlen(string));
 }
 
-void UART_TransmitESP(char* string) {
-    SCI_writeCharArray(UART_ESP_BASE, (uint16_t*)string, strlen(string));
+void UART_TransmitESP(char* string, int len) {
+    SCI_writeCharArray(UART_ESP_BASE, (uint16_t*)string, len);
 }
 
 void UART_Init(void) {
@@ -145,7 +145,6 @@ scibTxISR(void) {
 
 //    msg = "\r\nSending AT+GMR";
     UART_TransmitCOM("\r\nSending AT+GMR\n");
-    UART_TransmitESP("AT+GMR\r\n");
 //    SCI_writeCharArray(SCIA_BASE, (uint16_t*)msg, 22);
 
     // Ackowledge the PIE interrupt.

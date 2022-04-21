@@ -12,7 +12,7 @@ void UART_InitInterrupt(void);
 void UART_ResetRxBuffer(void);
 void UART_PrintRxBuffer(void);
 void UART_TransmitCOM(char* string);
-void UART_TransmitESP(char* string);
+void UART_TransmitESP(char* string, int len);
 void UART_SendCommand(char* string);
 
 

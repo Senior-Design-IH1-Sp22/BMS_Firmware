@@ -63,7 +63,7 @@ void ESP_DisableRXInts(void) {
 }
 
 void ESP_SendCommand(char* command) {
-    UART_TransmitESP(command);
+    UART_TransmitESP(command, strlen(command));
     DEVICE_DELAY_US(10000);
     SCI_readCharBlockingFIFO(UART_ESP_BASE);
     while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
@@ -73,31 +73,29 @@ void ESP_SendCommand(char* command) {
 }
 
 void ESP_WifiSendChar(char c) {
-    char str[2] = "\0";
-    str[0] = c;
-    UART_TransmitESP(AT_CIPSEND_1);
+    char* str = &c;
+    UART_TransmitESP(AT_CIPSEND_1, strlen(AT_CIPSEND_1));
     DEVICE_DELAY_US(10000);
     SCI_readCharBlockingFIFO(UART_ESP_BASE);
     while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
         SCI_readCharBlockingFIFO(UART_ESP_BASE);
         DEVICE_DELAY_US(100);
     }
-    UART_TransmitESP(str);
+    UART_TransmitESP(str, 1);
 }
 
 void ESP_WifiSendOneAtaTime(char* str, int len) {
     int i;
     for (i = 0; i < len; i++) {
-        char msg[2] = "\0";
-        msg[0] = str[i];
-        UART_TransmitESP(AT_CIPSEND_1);
+        char* msg = (str + i);
+        UART_TransmitESP(AT_CIPSEND_1, strlen(AT_CIPSEND_1));
         DEVICE_DELAY_US(10000);
         SCI_readCharBlockingFIFO(UART_ESP_BASE);
         while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
             SCI_readCharBlockingFIFO(UART_ESP_BASE);
             DEVICE_DELAY_US(100);
         }
-        UART_TransmitESP(msg);
+        UART_TransmitESP(msg, 1);
         DEVICE_DELAY_US(2000);
     }
 }
@@ -112,15 +110,15 @@ void ESP_WifiSendString(char* str, int len) {
 //        }
 //    }
     // Otherwise send multiple characters using one CIPSEND command
-    char cmd[] = "AT+CIPSEND=0,__\r\n";
+    char cmd[] = AT_CIPSEND_MULTI;
     cmd[13] = len/10 + '0';
     cmd[14] = len%10 + '0';
-    UART_TransmitESP(cmd);
+    UART_TransmitESP(cmd, strlen(cmd));
     DEVICE_DELAY_US(10000);
     SCI_readCharBlockingFIFO(UART_ESP_BASE);
     while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
         SCI_readCharBlockingFIFO(UART_ESP_BASE);
         DEVICE_DELAY_US(100);
     }
-    UART_TransmitESP(str);
+    UART_TransmitESP(str, len);
 }
