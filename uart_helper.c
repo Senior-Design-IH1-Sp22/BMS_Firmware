@@ -21,9 +21,9 @@ extern uint16_t RamfuncsRunStart;
 //
 // Defines
 //
-#define ESP_RX_BUFFER_LENGTH 1000
-#define ESP_RX_FIFO_LENGTH  12
-#define ESP_RX_FIFO_WIDTH   48
+#define ESP_RX_BUFFER_LENGTH 100
+#define ESP_RX_FIFO_LENGTH  16
+#define ESP_RX_FIFO_WIDTH   20
 
 //
 // Globals

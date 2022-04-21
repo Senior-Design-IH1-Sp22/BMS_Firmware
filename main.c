@@ -1,38 +1,8 @@
-//#############################################################################
-//
-// FILE:   i2c_ex6_eeprom_interrupt.c
-//
-// TITLE:  I2C EEPROM Write / Read using interrupt
-//
-//! \addtogroup driver_example_list
-//! <h1>I2C EEPROM</h1>
-//!
-//! This program will shows how to perform different EEPROM write and read commands using I2C interrupts
-//! EEPROM used for this example is AT24C256
-//!
-//! \b External \b Connections \n
-//!  - Connect external I2C EEPROM at address 0x50
-//!  --------------------------------
-//!    Signal   |  I2CA   |  EEPROM
-//!  --------------------------------
-//!     SCL     | GPIO37 |  SCL
-//!     SDA     | GPIO35 |  SDA
-//!     Make sure to connect GND pins if EEPROM and C2000 device are in different board.
-//!  --------------------------------
-//! //Example 1: EEPROM Byte Write
-//! //Example 2: EEPROM Byte Read
-//! //Example 3: EEPROM word (16-bit) write
-//! //Example 4: EEPROM word (16-bit) read
-//! //Example 5: EEPROM Page write
-//! //Example 6: EEPROM word Paged read
-//!
-//! \b Watch \b Variables \n
-//!  - \b TX_MsgBuffer - Message buffer which stores the data to be transmitted
-//!  - \b RX_MsgBuffer - Message buffer which stores the data to be received
-//!
-//!
-//#############################################################################
-
+/*
+ * BMS Firmware
+ * main.c
+ *
+ */
 
 // Defines
 #define _LAUNCHXL_F280049C          true
@@ -92,7 +62,7 @@ void I2Cinit(void);
 #define readAllVoltages 1
 #define doDeviceNum 0
 
-//#define TESTING_ESP
+#define TESTING_ESP
 
 #ifdef TESTING_ESP
 void main(void)
@@ -111,13 +81,17 @@ void main(void)
 
     UART_Init();
 
+    ESP_Init();
+
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
     EINT;
     ERTM;
     while(1) {
 //        UART_TransmitCOM("hello\n");
         //UART_TransmitCOM("\r\nSending a string\n");
-        ESP_WifiSendString("aabcdefg", 8);
+        char voltageMsg[] = {15, 1, 9, 164};
+        ESP_WifiSendString(voltageMsg, 4);
+//        ESP_WifiSendString("aabcdefg", 8);
         DEVICE_DELAY_US(500000);
 //        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
 //        SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
@@ -148,9 +122,9 @@ void main(void)
 
     I2Cinit();
 
-    ESP_Init();
-
     UART_Init();
+
+    ESP_Init();
 
     // Enable interrupts
     // Enable the RXRDY interrupt

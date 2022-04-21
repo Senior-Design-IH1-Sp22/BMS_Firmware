@@ -73,10 +73,9 @@ void ESP_SendCommand(char* command) {
 }
 
 void ESP_WifiSendChar(char c) {
-    char cmd[] = "AT+CIPSEND=0,1\r\n";
     char str[2] = "\0";
     str[0] = c;
-    UART_TransmitESP(cmd);
+    UART_TransmitESP(AT_CIPSEND_1);
     DEVICE_DELAY_US(10000);
     SCI_readCharBlockingFIFO(UART_ESP_BASE);
     while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
@@ -86,7 +85,33 @@ void ESP_WifiSendChar(char c) {
     UART_TransmitESP(str);
 }
 
+void ESP_WifiSendOneAtaTime(char* str, int len) {
+    int i;
+    for (i = 0; i < len; i++) {
+        char msg[2] = "\0";
+        msg[0] = str[i];
+        UART_TransmitESP(AT_CIPSEND_1);
+        DEVICE_DELAY_US(10000);
+        SCI_readCharBlockingFIFO(UART_ESP_BASE);
+        while (SCI_getRxFIFOStatus(UART_ESP_BASE)) {
+            SCI_readCharBlockingFIFO(UART_ESP_BASE);
+            DEVICE_DELAY_US(100);
+        }
+        UART_TransmitESP(msg);
+        DEVICE_DELAY_US(2000);
+    }
+}
+
 void ESP_WifiSendString(char* str, int len) {
+    // If /r or /n is in str, send one at a time
+//    int i;
+//    for (i = 0; i < len; i++) {
+//        if (str[i] == '\r' || str[i] == '\n') {
+//            ESP_WifiSendOneAtaTime(str, len);
+//            return;
+//        }
+//    }
+    // Otherwise send multiple characters using one CIPSEND command
     char cmd[] = "AT+CIPSEND=0,__\r\n";
     cmd[13] = len/10 + '0';
     cmd[14] = len%10 + '0';

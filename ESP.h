@@ -24,6 +24,7 @@
 #define AT_TRANSFER_QUERY "AT+CIPMODE?\r\n"
 #define AT_LIST_CLIENTS "AT+CWLIF\r\n"
 #define AT_LONG_TIMEOUT "AT+CIPSTO=0\r\n"
+#define AT_CIPSEND_1    "AT+CIPSEND=0,1\r\n"
 
 void ESP_Init(void);
 void ESP_EnableRXInts(void);

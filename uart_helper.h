@@ -5,7 +5,7 @@
 #ifndef UART_HELPER_H_
 #define UART_HELPER_H_
 
-#define UART_ESP_BASE SCIA_BASE
+#define UART_ESP_BASE SCIB_BASE
 
 void UART_Init(void);
 void UART_InitInterrupt(void);
