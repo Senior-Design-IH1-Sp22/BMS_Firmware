@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "uart_helper.h"
+#include "ESP.h"
 
 #ifdef _FLASH
 // These are defined by the linker (see device linker command file)
@@ -21,9 +22,9 @@ extern uint16_t RamfuncsRunStart;
 //
 // Defines
 //
-#define ESP_RX_BUFFER_LENGTH 1000
+#define ESP_RX_BUFFER_LENGTH 100
 #define ESP_RX_FIFO_LENGTH  12
-#define ESP_RX_FIFO_WIDTH   48
+#define ESP_RX_FIFO_WIDTH   12
 
 //
 // Globals
