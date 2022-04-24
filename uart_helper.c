@@ -102,7 +102,7 @@ void UART_Init(void) {
     GPIO_setQualificationMode(40, GPIO_QUAL_ASYNC);
 
     // Map the ISR to the wake interrupt.
-//    Interrupt_register(INT_SCIA_RX, scibRxISR);
+    Interrupt_register(INT_SCIA_RX, scibRxISR);
 
     // Initialize SCIA, SCIB, and their FIFO.
     SCI_performSoftwareReset(SCIA_BASE);

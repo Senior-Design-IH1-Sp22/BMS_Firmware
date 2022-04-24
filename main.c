@@ -33,12 +33,8 @@ uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE/2];
 uint32_t ControlAddr;
 uint16_t status=0;
 
-//I2C-UART 16b voltage data buffer
+//I2C-UART 16b data buffer
 unsigned char I2C_VoltageBuffer[32];
-//I2C-UART 16b temperature
-uint16_t I2C_TempBuffer;
-//I2C-UART 16b current
-uint16_t I2C_CurrBuffer;
 //I2C-UART register address buffer
 unsigned char Addr[32];
 
@@ -54,14 +50,19 @@ void verifyEEPROMRead(void);
 void I2C_GPIO_init(void);
 void I2Cinit(void);
 
-
+//#define doExample1 0
+//#define doExample2 0
+//#define doExample3 0
+//#define doExample4 0
+//#define doExample5 0
+//#define doExample6 0
 #define doAlarmEnable 0
 #define doReadVoltageUART 0
 #define doReadVoltage 0
 #define readAllVoltages 1
 #define doDeviceNum 0
 
-//#define TESTING_ESP
+#define TESTING_ESP
 
 #ifdef TESTING_ESP
 void main(void)
@@ -121,6 +122,10 @@ void main(void)
 
     I2Cinit();
 
+    UART_Init();
+
+    ESP_Init();
+
     // Enable interrupts
     // Enable the RXRDY interrupt
 //    SCI_enableInterrupt(SCIB_BASE, SCI_INT_RXRDY_BRKDT);
@@ -135,19 +140,15 @@ void main(void)
 
     // Interrupts that are used in this example are re-mapped to ISR functions
     // found within this file.
-    //Interrupt_register(INT_I2CA_FIFO, &i2cFIFO_isr);
+    Interrupt_register(INT_I2CA_FIFO, &i2cFIFO_isr);
 
-    //Interrupt_enable(INT_I2CA_FIFO);
-    //Interrupt_register(INT_I2CA, &i2c_isr);
-    //Interrupt_enable(INT_I2CA);
-
-    UART_Init();
-
-    ESP_Init();
+    Interrupt_enable(INT_I2CA_FIFO);
+    Interrupt_register(INT_I2CA, &i2c_isr);
+    Interrupt_enable(INT_I2CA);
 
     // Enable Global Interrupt (INTM) and realtime interrupt (DBGM)
-    //EINT;
-    //ERTM;
+    EINT;
+    ERTM;
 
     //I2Cs connected to I2CA will be found in AvailableI2C_slaves buffer after you run I2CBusScan function.
     //scans for I2C bus slaves (look for ACK back)
@@ -164,9 +165,6 @@ void main(void)
     EEPROM.NumOfAddrBytes       = 1;
 
     while(1){
-        //enable global interrupts
-        //EINT;
-        Interrupt_enable(INT_I2CA);
         if (doReadVoltage) {
             ControlAddr = 0x14;
             EEPROM.pControlAddr   = &ControlAddr;
@@ -201,6 +199,7 @@ void main(void)
         if(readAllVoltages){
             uint32_t j = 0;
             ControlAddr = 0x14;
+            //uint32_t AddrBase;
             //use timer interrupt instead of loop
             while(ControlAddr < 0x34){
                 Addr[(ControlAddr-0x14)] = ControlAddr;
@@ -215,19 +214,6 @@ void main(void)
                 j=j^1;
                 ControlAddr = ControlAddr+1;
             }
-            //get temperature
-            //temperature 0x72 for TS2
-            ControlAddr = 0x72;
-            EEPROM.pControlAddr   = &ControlAddr;
-            EEPROM.pRX_MsgBuffer  = RX_MsgBuffer;
-            EEPROM.NumOfDataBytes = 1;
-            status = I2C_MasterReceiver(&EEPROM);
-            while(I2C_getStatus(EEPROM.base) & I2C_STS_BUS_BUSY);
-            I2C_TempBuffer = RX_MsgBuffer;
-
-            //I2C-UART 16b current
-            //unsigned char I2C_CurrBuffer;
-
         }
         if (doDeviceNum) {
             ControlAddr = 0x3E;
@@ -251,44 +237,13 @@ void main(void)
 //            UART_transmitPlain(device_str);
 //            UART_transmitString("");
         }
-
-        //Disable all interrupts
-        //DINT;
-
         //UART_TransmitCOM("\r\nSending a string\n");
         //Concatenate voltage register bytes
-        //uint16_t voltage = ((I2C_VoltageBuffer[1]<<8) & 0xFF00)|I2C_VoltageBuffer[0];
+        uint16_t voltage = ((I2C_VoltageBuffer[1]<<8) & 0xFF00)|I2C_VoltageBuffer[0];
 
-        char i = 0;
-        //voltage
-//        while(i<32){
-//            char index = i/2;
-//            char vhex[4] = {0xF, 0, I2C_VoltageBuffer[i+1], I2C_VoltageBuffer[i]};
-//            ESP_WifiSendString(vhex, 4);
-//            DEVICE_DELAY_US(500000);
-//            i = i+2;
-//        }
-        char vhex[4] = {0xF, 0xF, 0x4, 0xd2};
+        char vhex[4] = {0xF, 1, I2C_VoltageBuffer[1], I2C_VoltageBuffer[0]};
         ESP_WifiSendString(vhex, 4);
-        DEVICE_DELAY_US(1000000);
-
-        char vhex0[4] = {0xF, 0, I2C_VoltageBuffer[1], I2C_VoltageBuffer[0]};
-        ESP_WifiSendString(vhex0, 4);
-        DEVICE_DELAY_US(1000000);
-
-        char vhex1[4] = {0xF, 1, I2C_VoltageBuffer[3], I2C_VoltageBuffer[2]};
-        ESP_WifiSendString(vhex1, 4);
-        DEVICE_DELAY_US(1000000);
-
-        char vhex2[4] = {0xF, 2, I2C_VoltageBuffer[5], I2C_VoltageBuffer[4]};
-        ESP_WifiSendString(vhex2, 4);
-        DEVICE_DELAY_US(1000000);
-
-
-
-        //temp
-        //char temp[3] = {0xE, 0, I2C_TempBuffer};
-
+        DEVICE_DELAY_US(500000);
 //        uint16_t receivedChar = SCI_readCharBlockingFIFO(SCIB_BASE);
 //        SCI_writeCharBlockingFIFO(SCIA_BASE, receivedChar);
 //        while (SCI_getRxStatus(SCIB_BASE) & SCI_RXSTATUS_READY) {
