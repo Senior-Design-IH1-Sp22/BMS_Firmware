@@ -18,7 +18,7 @@
 #define ERROR_STOP_NOT_READY        0x5555
 #define SUCCESS                     0x0000
 
-#define MAX_BUFFER_SIZE             128
+#define MAX_BUFFER_SIZE             64
 #define I2C_FIFO_LEVEL              16
 
 #define MAX_7_BIT_ADDRESS 127U
