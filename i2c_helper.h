@@ -18,7 +18,7 @@
 #define ERROR_STOP_NOT_READY        0x5555
 #define SUCCESS                     0x0000
 
-#define MAX_BUFFER_SIZE             128
+#define MAX_BUFFER_SIZE             32
 #define I2C_FIFO_LEVEL              16
 
 #define MAX_7_BIT_ADDRESS 127U
@@ -64,8 +64,8 @@ uint16_t handleNACK(uint32_t base);
 extern void handleI2C_ErrorCondition(struct I2CHandle *I2C_Params);
 extern void Write_Read_TX_RX_FIFO(struct I2CHandle *I2C_Params);
 
-extern uint16_t TX_MsgBuffer[MAX_BUFFER_SIZE/2];
-extern uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE/2];
+extern uint16_t TX_MsgBuffer[MAX_BUFFER_SIZE];
+extern uint16_t RX_MsgBuffer[MAX_BUFFER_SIZE];
 
 extern uint16_t status;
 
